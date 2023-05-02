@@ -1,8 +1,6 @@
-const { products } = require('./db-data');
-
 module.exports = {
   async up(queryInterface, _Sequelize) {
-    await queryInterface.bullkInsert('users', [
+    await queryInterface.bulkInsert('users', [
       {
         id: 1,
         name: 'Skol Lata 250ml',

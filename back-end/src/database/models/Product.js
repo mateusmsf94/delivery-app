@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       name: DataTypes.STRING,
       price: DataTypes.DECIMAL,
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: false,
       underscored: true,
-      tableName: 'products'
+      tableName: 'products',
     },
   );
 

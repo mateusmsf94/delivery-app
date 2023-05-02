@@ -1,8 +1,6 @@
-const { users } = require('./db-data');
-
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
-    await queryInterface.bullkInsert('users', [
+    await queryInterface.bulkInsert('users', [
       {
         id: 1,
         name: 'Delivery App Admin',
