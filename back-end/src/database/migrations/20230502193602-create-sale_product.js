@@ -13,7 +13,10 @@ module.exports = {
         references: { model: 'products', key: 'id' },
         primaryKey: true,
       },
-      quantity: { type: Sequelize.INTEGER, allowNull: false },
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
     });
   },
 

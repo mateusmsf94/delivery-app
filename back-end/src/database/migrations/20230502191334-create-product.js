@@ -7,9 +7,19 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      name: { type: Sequelize.STRING, allowNull: false },
-      price: { type: Sequelize.DECIMAL(4, 2), allowNull: false },
-      urlImage: { type: Sequelize.STRING, field: 'url_image', defaultValue: '' },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      price: {
+        type: Sequelize.DECIMAL(4, 2),
+        allowNull: false
+      },
+      urlImage: {
+        type: Sequelize.STRING,
+        field: 'url_image',
+        defaultValue: ''
+      },
     });
   },
 
