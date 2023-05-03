@@ -1,9 +1,9 @@
 import AuthHeader from '../components/AuthHeader';
 
-function Home() {
+function Register() {
   return (
     <AuthHeader />
   );
 }
 
-export default Home;
+export default Register;
