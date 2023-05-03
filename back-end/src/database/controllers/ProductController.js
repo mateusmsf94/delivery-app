@@ -10,6 +10,18 @@ const getAll = async (req, res, next) => {
   }
 };
 
-const productController = { getAll };
+const getProductById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const data = await productService.getProductById(id);
+
+    return res.status(data.status).json(data.message);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const productController = { getAll, getProductById };
 
 module.exports = productController;

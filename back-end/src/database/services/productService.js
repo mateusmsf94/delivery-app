@@ -6,6 +6,12 @@ const getAll = async () => {
   return data;
 };
 
-const productService = { getAll };
+const getProductById = async (id) => {
+  const data = await Product.findByPk(id);
+
+  return { status: 200, message: data };
+};
+
+const productService = { getAll, getProductById };
 
 module.exports = productService;
