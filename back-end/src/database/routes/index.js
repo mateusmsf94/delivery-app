@@ -1,3 +1,8 @@
+
+const loginRouter = require('./LoginRoute');
+
+module.exports = { loginRouter };
+
 const express = require('express');
 const { UserController } = require('../controllers');
 const productRouter = require('./productRouter');
@@ -8,3 +13,4 @@ apiRoutes.get('/email', UserController.getUserByEmail);
 apiRoutes.use('/products', productRouter);
 
 module.exports = apiRoutes;
+
