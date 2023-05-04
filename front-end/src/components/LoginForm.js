@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AuthHeader from './AuthHeader';
 import InputField from './InputField';
 
@@ -8,6 +9,7 @@ function LoginForm() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const minPasswordLength = 6;
+  const history = useHistory();
 
   const validateEmail = () => {
     // Regular expression to check for a valid email format
@@ -35,6 +37,10 @@ function LoginForm() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     validatePassword();
+  };
+
+  const redirectToRegister = () => {
+    history.push('/register');
   };
 
   return (
@@ -67,6 +73,7 @@ function LoginForm() {
       <div className="mx-5 my-4">
         <button
           type="submit"
+          onClick={ handleSubmit }
           className={ `w-full py-2 px-4 bg-green-600 text-white font-semibold 
           rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 
           focus:ring-primary-600 focus:ring-opacity-50 mb-2` }
@@ -75,6 +82,8 @@ function LoginForm() {
         </button>
         <button
           type="button"
+          onClick={ redirectToRegister }
+          dataTestId="common_login__button-register"
           className={ `w-full py-2 px-4 bg-white text-green-600 font-semibold 
           rounded-lg hover:bg-green-300 focus:outline-none focus:ring-2 
           focus:ring-green-600 focus:ring-opacity-50 mb-2 border border-green-600` }

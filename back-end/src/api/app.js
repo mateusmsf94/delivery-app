@@ -1,10 +1,12 @@
 const express = require('express');
 const loginRouter = require('../database/routes');
+const createUser = require('../database/controllers/UserController');
 
 const app = express();
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 app.get('/login', loginRouter);
+app.get('/register', createUser);
 
 app.use(express.json());
 
