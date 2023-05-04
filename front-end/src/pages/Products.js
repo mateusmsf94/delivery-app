@@ -8,6 +8,7 @@ export default function Products() {
   const fetchProducts = async () => {
     const response = await fetch('http://localhost:3001/products/');
     const data = await response.json();
+    console.log(data);
     return data;
   };
 
@@ -35,9 +36,11 @@ export default function Products() {
               key={ id }
             >
               <img
-                url={ urlImage }
+                src={ urlImage }
                 alt={ name }
                 data-testid={ `customer_products__img-card-bg-image-${id}` }
+                // Retirar tag e por no css
+                width="100px"
               />
               <p data-testid={ `customer_products__element-card-price-${id}` }>
                 { price }

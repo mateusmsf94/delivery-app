@@ -8,6 +8,8 @@ app.get('/coffee', (_req, res) => res.status(418).end());
 
 app.use(express.json());
 app.use(cors()); // Add the CORS middleware
+
+app.use(express.static('public'));
 app.use(apiRoutes);
 
 app.use((error, _req, res, _next) => {
