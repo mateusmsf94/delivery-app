@@ -1,21 +1,26 @@
-import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import NavCustomer from '../components/NavCustomer';
 
 export default function Products() {
-  const history = useHistory();
+  const [products, setProducts] = useState([]);
 
-  // Mudar para produto, quando implementar o back-end
-  const teste = [
-    {
-      id: 2,
-      name: 'Heineken 600ml',
-      price: 7.50,
-      urlImage: 'http://localhost:3001/images/heineken_600ml.jpg',
-    },
-  ];
+  const fetchProducts = async () => {
+    const response = await fetch('http://localhost:3001/products/');
+    const data = await response.json();
+    return data;
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      setProducts(await fetchProducts());
+    };
+
+    getData();
+  }, []);
 
   const useNavBar = () => {
-    if (history.path === '/customer/products') {
+    if (useLocation().pathname === '/customer/products') {
       return (<NavCustomer />);
     }
   };
@@ -25,8 +30,7 @@ export default function Products() {
       { useNavBar() }
       <main>
         {
-          // Mudar para produto, quando implementar o back-end
-          teste.map(({ id, name, price, urlImage }) => (
+          products.map(({ id, name, price, urlImage }) => (
             <div
               key={ id }
             >

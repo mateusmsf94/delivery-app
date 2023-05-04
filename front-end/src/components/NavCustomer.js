@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export default function NavCustomer() {
   return (
     <nav>
-      <Link to="/products">
+      <Link to="/customer/products">
         <button
           type="button"
           data-testid="customer_products__element-navbar-link-products"
@@ -11,14 +11,17 @@ export default function NavCustomer() {
           Produtos
         </button>
       </Link>
-      <button
-        type="button"
-        data-testid="customer_products__element-navbar-link-orders"
-      >
-        Meus Pedidos
-      </button>
+      <Link to="/customer/orders">
+        <button
+          type="button"
+          data-testid="customer_products__element-navbar-link-orders"
+        >
+          Meus Pedidos
+        </button>
+      </Link>
       <p data-testid="customer_products__element-navbar-user-full-name">
-        {/* Nome do usuario */}
+        {/* Trocar pelo nome do usuario */}
+        TESTE
       </p>
       <button
         type="button"

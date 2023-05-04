@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const apiRoutes = require('../database/routes');
 
 const app = express();
@@ -6,6 +7,7 @@ const app = express();
 app.get('/coffee', (_req, res) => res.status(418).end());
 
 app.use(express.json());
+app.use(cors()); // Add the CORS middleware
 app.use(apiRoutes);
 
 app.use((error, _req, res, _next) => {
