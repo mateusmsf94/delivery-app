@@ -1,8 +1,3 @@
-const express = require('express');
-const { UserController } = require('../controllers')
+const loginRouter = require('./LoginRoute');
 
-const apiRoutes = express.Router();
-
-apiRoutes.get('/email', UserController.getUserByEmail);
-
-module.exports = apiRoutes;
+module.exports = { loginRouter };
