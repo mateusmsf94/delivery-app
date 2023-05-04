@@ -66,12 +66,12 @@ export default function Products() {
                   onChange={
                     ({ target: { value } }) => setQty({ ...qty, [id]: Number(value) })
                   }
-                  value={ qty[id] }
+                  value={ qty[id] || 0 }
                 />
                 <button
                   data-testid={ `customer_products__button-card-add-item-${id}` }
                   type="button"
-                  onClick={ () => setQty({ ...qty, [id]: (qty[id] + 1) }) }
+                  onClick={ () => setQty({ ...qty, [id]: ((qty[id] || 0) + 1) }) }
                 >
                   +
                 </button>
