@@ -4,11 +4,11 @@ import NavCustomer from '../components/NavCustomer';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
+  const [qty, setQty] = useState({});
 
   const fetchProducts = async () => {
     const response = await fetch('http://localhost:3001/products/');
     const data = await response.json();
-    console.log(data);
     return data;
   };
 
@@ -19,6 +19,10 @@ export default function Products() {
 
     getData();
   }, []);
+
+  useEffect(() => {
+    console.log(qty);
+  });
 
   const useNavBar = () => {
     if (useLocation().pathname === '/customer/products') {
@@ -52,18 +56,22 @@ export default function Products() {
                 <button
                   type="button"
                   data-testid={ `customer_products__button-card-rm-item-${id}` }
+                  onClick={ () => setQty({ ...qty, [id]: (qty[id] - 1) }) }
                 >
                   -
                 </button>
                 <input
                   data-testid={ `customer_products__input-card-quantity-${id}` }
                   type="number"
-                  // onChange={ ({ target: { value } }) => setInput(value) }
-                  // value={ inputValue }
+                  onChange={
+                    ({ target: { value } }) => setQty({ ...qty, [id]: Number(value) })
+                  }
+                  value={ qty[id] }
                 />
                 <button
                   data-testid={ `customer_products__button-card-add-item-${id}` }
                   type="button"
+                  onClick={ () => setQty({ ...qty, [id]: (qty[id] + 1) }) }
                 >
                   +
                 </button>
