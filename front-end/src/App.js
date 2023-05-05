@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import ChildComponent from './pages/TestContx';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Products from './pages/Products';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/test" component={ ChildComponent } />
           <Route path="/login" component={ Login } />
           <Route path="/register" component={ Register } />
+          <Route path="/customer/products" component={ Products } />
         </Switch>
       </div>
     </Router>
