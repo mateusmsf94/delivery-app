@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 export default function NavCustomer() {
   const [user, setUser] = useState({});
-  // const history = useHistory();
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('user')) || [];
@@ -13,23 +12,29 @@ export default function NavCustomer() {
   const logOut = () => localStorage.removeItem('user');
 
   return (
-    <nav>
+    <nav className="navBar">
       <Link
+        className="navProduct"
         to="/customer/products"
         data-testid="customer_products__element-navbar-link-products"
       >
         Produtos
       </Link>
       <Link
+        className="navPedidos"
         to="/customer/orders"
         data-testid="customer_products__element-navbar-link-orders"
       >
         Meus Pedidos
       </Link>
-      <p data-testid="customer_products__element-navbar-user-full-name">
-        { user.name }
+      <p
+        data-testid="customer_products__element-navbar-user-full-name"
+        className="navUser"
+      >
+        {/* { user.name } */}
+        TULIO AMORIM
       </p>
-      <Link to="/login">
+      <Link to="/login" className="navLogout">
         <button
           type="button"
           data-testid="customer_products__element-navbar-link-logout"
