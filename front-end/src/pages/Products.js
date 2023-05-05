@@ -1,35 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import NavCustomer from '../components/NavCustomer';
+import MyContext from '../MyContext';
 
 export default function Products() {
-  const [products, setProducts] = useState([]);
   const [qty, setQty] = useState({});
 
-  const fetchProducts = async () => {
-    const response = await fetch('http://localhost:3001/products/');
-    const data = await response.json();
-    return data;
-  };
+  const { dataFetch } = useContext(MyContext);
 
+  // Obten do localstorage
   useEffect(() => {
-    const getData = async () => {
-      setProducts(await fetchProducts());
-    };
-
-    getData();
+    const quantidade = JSON.parse(localStorage.getItem('myProducts')) || [];
+    setQty(quantidade);
   }, []);
 
-  // Imprimi quantidade dos produtos
-  // useEffect(() => {
-  //   console.log(qty);
-  // });
+  // Salva no localstorage
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(qty));
+  });
 
   return (
     <>
       <NavCustomer />
       <main>
         {
-          products.map(({ id, name, price, urlImage }) => (
+          dataFetch.map(({ id, name, price, urlImage }) => (
             <div
               key={ id }
             >
@@ -73,7 +67,13 @@ export default function Products() {
             </div>
           ))
         }
+        <p>VER CARRINHO</p>
       </main>
     </>
   );
 }
+
+// const sendToLocalStorage = () => {
+//   localStorage.setItem('myProducts', JSON.stringify(qty));
+//   // console.log('ok');
+// };
