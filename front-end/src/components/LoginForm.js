@@ -74,6 +74,8 @@ function LoginForm() {
     }
   };
 
+  const isDisabled = emailError || passwordError || email === '' || password === '';
+
   return (
     <form
       className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0"
@@ -107,16 +109,19 @@ function LoginForm() {
       <div className="mx-5 my-4">
         <button
           type="submit"
+          disabled={ isDisabled }
+          data-testid="common_login__button-login"
           className={ `w-full py-2 px-4 bg-green-600 text-white font-semibold 
           rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 
-          focus:ring-primary-600 focus:ring-opacity-50 mb-2` }
+          focus:ring-primary-600 focus:ring-opacity-50 mb-2 
+          ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}` }
         >
           Log in
         </button>
         <button
           type="button"
           onClick={ redirectToRegister }
-          datatestid="common_login__button-register"
+          data-testid="common_login__button-register"
           className={ `w-full py-2 px-4 bg-white text-green-600 font-semibold 
           rounded-lg hover:bg-green-300 focus:outline-none focus:ring-2 
           focus:ring-green-600 focus:ring-opacity-50 mb-2 border border-green-600` }
