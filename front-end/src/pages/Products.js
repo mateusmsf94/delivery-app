@@ -4,7 +4,7 @@ import NavCustomer from '../components/NavCustomer';
 import MyContext from '../MyContext';
 
 export default function Products() {
-  const { dataFetch } = useContext(MyContext);
+  const { dataFetch, setTotalBill, totalBill } = useContext(MyContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const [qty, setQty] = useState({});
 
@@ -16,6 +16,7 @@ export default function Products() {
     });
 
     setTotalPrice(priceList.reduce((acc, cur) => acc + cur, 0));
+    setTotalBill(totalPrice);
   }
 
   // Obten do localstorage

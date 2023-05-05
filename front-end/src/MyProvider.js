@@ -5,6 +5,7 @@ import MyContext from './MyContext';
 function MyProvider({ children }) {
   const [value, setValue] = useState('Initial value');
   const [dataFetch, setDataFetch] = useState([]);
+  const [totalBill, setTotalBill] = useState(0);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,7 +22,9 @@ function MyProvider({ children }) {
   };
 
   const contextValue = useMemo(() => (
-    { value, changeValue, dataFetch }), [value, dataFetch]);
+    { value, changeValue, dataFetch, totalBill, setTotalBill }),
+  [value, dataFetch, totalBill, setTotalBill]
+  );
 
   return (
     <MyContext.Provider value={ contextValue }>
