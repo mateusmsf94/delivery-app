@@ -48,30 +48,40 @@ export default function Products() {
   return (
     <>
       <NavCustomer />
-      <main>
+      <main className="flex flex-wrap justify-center">
         {
           dataFetch.map(({ id, name, price, urlImage }) => (
             <div
+              className="w-56 h-80 border m-3 bg-gray-100 shadow-md rounded-bl rounded-br"
               key={ id }
             >
+              <p
+                data-testid={ `customer_products__element-card-price-${id}` }
+                className={ `absolute m-3 bg-neutral-500
+                  bg-opacity-30 p-1 rounded font-bold` }
+              >
+                { `R$ ${price}` }
+              </p>
               <img
                 src={ urlImage }
                 alt={ name }
                 data-testid={ `customer_products__img-card-bg-image-${id}` }
-                // Retirar tag e por no css
-                width="100px"
+                className={ `object-cover w-full h-56 p-2 object-scale-down 
+                  bg-white aspect-ratio-3/2` }
               />
-              <p data-testid={ `customer_products__element-card-price-${id}` }>
-                { price }
-              </p>
-              <p data-testid={ `customer_products__element-card-title-${id}` }>
+              <p
+                data-testid={ `customer_products__element-card-title-${id}` }
+                className="text-center text-green-950 mt-2"
+              >
                 { name }
               </p>
-              <div>
+              <div className="flex justify-center mt-1">
                 <button
                   type="button"
                   data-testid={ `customer_products__button-card-rm-item-${id}` }
                   onClick={ () => updateQty(id, 'rm') }
+                  className={ `bg-green-800 text-white text-bold w-9 h-9 rounded-tl-md
+                    rounded-bl-md text-3xl` }
                 >
                   -
                 </button>
@@ -80,11 +90,19 @@ export default function Products() {
                   type="number"
                   onChange={ ({ target: { value } }) => validateInput(id, value) }
                   value={ qty[id] || 0 }
+                  className={ `w-10 text-center border-t border-b border-green-800
+                    appearance-none [-moz-appearance:_textfield] 
+                    [&::-webkit-outer-spin-button]:m-0
+                    [&::-webkit-outer-spin-button]:appearance-none 
+                    [&::-webkit-inner-spin-button]:m-0 
+                    [&::-webkit-inner-spin-button]:appearance-none` }
                 />
                 <button
                   data-testid={ `customer_products__button-card-add-item-${id}` }
                   type="button"
                   onClick={ () => updateQty(id, 'add') }
+                  className={ `bg-green-800 text-white text-bold w-9 h-9 rounded-tr-md
+                  rounded-br-md text-3xl` }
                 >
                   +
                 </button>
@@ -95,6 +113,8 @@ export default function Products() {
         <Link
           to="/customer/checkout"
           data-testid="customer_products__button-cart"
+          className={ `fixed bottom-0 right-0 m-3 bg-green-800 text-white text-bold
+            p-2 rounded` }
         >
           <p data-testid="customer_products__checkout-bottom-value">
             { `Ver carrinho: R$${totalPrice.toFixed(2)}` }
