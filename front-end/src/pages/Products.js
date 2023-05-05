@@ -15,7 +15,7 @@ export default function Products() {
 
   // Salva no localstorage
   useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(qty));
+    localStorage.setItem('myProducts', JSON.stringify(qty));
   });
 
   return (
