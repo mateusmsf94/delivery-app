@@ -64,6 +64,7 @@ function LoginForm() {
       if (response.ok) {
         const data = await response.json();
         console.log('Response from server:', data);
+        history.push('/customer/products');
         // Handle successful login, e.g. store token, redirect to the main page, etc.
       } else {
         // Handle unsuccessful login, e.g. display an error message
