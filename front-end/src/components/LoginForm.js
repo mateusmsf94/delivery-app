@@ -8,7 +8,7 @@ function LoginForm() {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const minPasswordLength = 6;
+  const minPasswordLength = 5;
   const history = useHistory();
 
   const validateEmail = () => {
@@ -36,6 +36,7 @@ function LoginForm() {
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+    console.log(password.length);
     validatePassword();
   };
 
