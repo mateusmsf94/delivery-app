@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './pages/Home';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import ChildComponent from './pages/TestContx';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -10,9 +9,9 @@ function App() {
     <Router>
       <div>
         <Switch>
-          <Route exact path="/" component={ Home } />
-          <Route path="/test" component={ ChildComponent } />
+          <Route exact path="/" render={ () => <Redirect to="/login" /> } />
           <Route path="/login" component={ Login } />
+          <Route path="/test" component={ ChildComponent } />
           <Route path="/register" component={ Register } />
           <Route path="/customer/products" component={ Products } />
         </Switch>
