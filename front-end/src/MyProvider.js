@@ -14,16 +14,16 @@ function MyProvider({ children }) {
       return setDataFetch(data);
     };
     fetchProducts();
-    console.log(dataFetch);
   }, []);
 
   const changeValue = (newValue) => {
     setValue(newValue);
   };
 
-  const contextValue = useMemo(() => (
-    { value, changeValue, dataFetch, totalBill, setTotalBill }),
-  [value, dataFetch, totalBill, setTotalBill]
+  const contextValue = useMemo(
+    () => (
+      { value, changeValue, dataFetch, totalBill, setTotalBill }),
+    [value, dataFetch, totalBill, setTotalBill],
   );
 
   return (

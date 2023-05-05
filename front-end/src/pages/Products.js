@@ -4,7 +4,7 @@ import NavCustomer from '../components/NavCustomer';
 import MyContext from '../MyContext';
 
 export default function Products() {
-  const { dataFetch, setTotalBill, totalBill } = useContext(MyContext);
+  const { dataFetch, setTotalBill } = useContext(MyContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const [qty, setQty] = useState({});
 
