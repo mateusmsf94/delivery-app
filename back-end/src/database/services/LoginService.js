@@ -1,5 +1,5 @@
 const md5 = require('md5');
-const User = require('../models/User');
+const { User } = require('../models');
 const NotFound = require('../utils/ErrorStatus/NotFound');
 const { createToken } = require('../utils/jwt');
 

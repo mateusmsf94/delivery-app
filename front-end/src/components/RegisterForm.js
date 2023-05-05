@@ -40,28 +40,23 @@ function RegisterForm() {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    validateEmail();
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    validatePassword();
   };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-    validateName();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Perform client-side validation
     validateEmail();
     validatePassword();
     validateName();
 
-    // Only send the request if there are no validation errors
     if (!emailError && !passwordError && !nameError) {
       try {
         const response = await fetch('http://localhost:3001/register', {
