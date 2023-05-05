@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AuthHeader from './AuthHeader';
 import InputField from './InputField';
 
@@ -8,6 +9,7 @@ function LoginForm() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const minPasswordLength = 6;
+  const history = useHistory();
 
   const validateEmail = () => {
     // Regular expression to check for a valid email format
@@ -37,15 +39,53 @@ function LoginForm() {
     validatePassword();
   };
 
+  const redirectToRegister = () => {
+    history.push('/register');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (emailError || passwordError) {
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Response from server:', data);
+        // Handle successful login, e.g. store token, redirect to the main page, etc.
+      } else {
+        // Handle unsuccessful login, e.g. display an error message
+        const errorData = await response.json();
+        console.error(errorData);
+      }
+    } catch (error) {
+      // Handle network errors or other issues with the API request
+      console.error('Error:', error);
+    }
+  };
+
   return (
-    <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+    <form
+      className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0"
+      onSubmit={ handleSubmit }
+    >
       <AuthHeader />
       <InputField
         label="Email"
         type="email"
         name="email"
         id="email"
-        dataTestId="common_login__input-email"
+        datatestid="common_login__input-email"
         value={ email }
         onChange={ handleEmailChange }
       />
@@ -57,7 +97,7 @@ function LoginForm() {
         type="password"
         name="password"
         id="password"
-        dataTestId="common_login__input-password"
+        datatestid="common_login__input-password"
         value={ password }
         onChange={ handlePasswordChange }
       />
@@ -75,6 +115,8 @@ function LoginForm() {
         </button>
         <button
           type="button"
+          onClick={ redirectToRegister }
+          datatestid="common_login__button-register"
           className={ `w-full py-2 px-4 bg-white text-green-600 font-semibold 
           rounded-lg hover:bg-green-300 focus:outline-none focus:ring-2 
           focus:ring-green-600 focus:ring-opacity-50 mb-2 border border-green-600` }
@@ -82,7 +124,8 @@ function LoginForm() {
           Register
         </button>
       </div>
-    </div>
+
+    </form>
   );
 }
 

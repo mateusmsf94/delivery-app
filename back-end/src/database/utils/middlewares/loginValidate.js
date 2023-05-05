@@ -5,7 +5,7 @@ const validateLoginFields = async (req, res, next) => {
   if (!regex.test(email) || password.length < 6) {
     return res.status(409).json({ message: 'Bad Request' });
   }
-
+  console.log('passei na validacao');
   return next();
 };
 

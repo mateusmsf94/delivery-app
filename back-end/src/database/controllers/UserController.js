@@ -1,16 +1,15 @@
-const { UserService } = require('../services')
+const { UserService } = require('../services');
 
-const getUserByEmail = async (req, res) => {
+const createUser = async (req, res) => {
   try {
-    const { email } = req.body;
-    
-    const userByEmail = await UserService.getByEmail(email);
-    if(userByEmail) { return res.status(200).json(userByEmail) };
-
-    return res.status(404).json({ message: "User does not exist" });
+    const { statusCode, data } = await UserService.createUser(req.body);
+    return res.status(statusCode).json(data);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error(error);
+    return res
+      .status(error.statusCode || 500)
+      .json({ message: error.message || 'Internal Server Error' });
   }
-}
+};
 
-module.exports = { getUserByEmail };
+module.exports = createUser;

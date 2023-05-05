@@ -4,18 +4,18 @@ module.exports = (sequelize, DataTypes) => {
     {
       saleId: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
       },
       productId: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
       },
       quantity: DataTypes.INTEGER,
     },
     {
       timestamps: false,
       underscored: true,
-      tableName: 'sales_products'
+      tableName: 'sales_products',
     },
   );
 

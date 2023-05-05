@@ -1,11 +1,9 @@
-import AuthHeader from '../components/AuthHeader';
+import LoginForm from '../components/LoginForm';
 
 function Login() {
   return (
-    <div>
-      <div>
-        <AuthHeader />
-      </div>
+    <div className="flex justify-center mt-16">
+      <LoginForm />
     </div>
   );
 }
