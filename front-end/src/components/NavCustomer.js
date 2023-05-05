@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function NavCustomer() {
   const [user, setUser] = useState({});
+  // const history = useHistory();
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('user')) || [];
@@ -32,7 +33,7 @@ export default function NavCustomer() {
         <button
           type="button"
           data-testid="customer_products__element-navbar-link-logout"
-          onClick={ logOut() }
+          onClick={ logOut }
         >
           Sair
         </button>
