@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import NavCustomer from '../components/NavCustomer';
 
 export default function Products() {
@@ -20,19 +19,14 @@ export default function Products() {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log(qty);
-  });
-
-  const useNavBar = () => {
-    if (useLocation().pathname === '/customer/products') {
-      return (<NavCustomer />);
-    }
-  };
+  // Imprimi quantidade dos produtos
+  // useEffect(() => {
+  //   console.log(qty);
+  // });
 
   return (
     <>
-      { useNavBar() }
+      <NavCustomer />
       <main>
         {
           products.map(({ id, name, price, urlImage }) => (
