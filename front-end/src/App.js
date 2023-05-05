@@ -8,7 +8,6 @@ function App() {
   return (
     <Router>
       <div>
-        {/* Your navigation component if you have any */}
         <Switch>
           <Route exact path="/" component={ Home } />
           <Route path="/test" component={ ChildComponent } />
