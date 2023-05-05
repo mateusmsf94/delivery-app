@@ -8,6 +8,7 @@ function LoginForm() {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [emailNotFound, setEmailNotFound] = useState('');
   const minPasswordLength = 5;
   const history = useHistory();
 
@@ -68,6 +69,7 @@ function LoginForm() {
         // Handle unsuccessful login, e.g. display an error message
         const errorData = await response.json();
         console.error(errorData);
+        setEmailNotFound('Email not found');
       }
     } catch (error) {
       // Handle network errors or other issues with the API request
@@ -130,6 +132,14 @@ function LoginForm() {
           Register
         </button>
       </div>
+      {emailNotFound && (
+        <p
+          className="mx-5 text-sm text-red-500"
+          data-testid="common_login__element-invalid-email"
+        >
+          {emailNotFound}
+        </p>
+      )}
 
     </form>
   );
