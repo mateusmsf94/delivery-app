@@ -1,11 +1,22 @@
 import { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import NavCustomer from '../components/NavCustomer';
 import MyContext from '../MyContext';
 
 export default function Products() {
+  const { dataFetch } = useContext(MyContext);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [qty, setQty] = useState({});
 
-  const { dataFetch } = useContext(MyContext);
+  function refreshCarPrice() {
+    const priceList = dataFetch.map((product) => {
+      const price = (qty[product.id] * product.price);
+      const priceFixed = price ? price.toFixed(2) : 0;
+      return Number(priceFixed);
+    });
+
+    setTotalPrice(priceList.reduce((acc, cur) => acc + cur, 0));
+  }
 
   // Obten do localstorage
   useEffect(() => {
@@ -15,7 +26,8 @@ export default function Products() {
 
   // Salva no localstorage
   useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(qty));
+    localStorage.setItem('myProducts', JSON.stringify(qty));
+    refreshCarPrice();
   });
 
   return (
@@ -67,13 +79,15 @@ export default function Products() {
             </div>
           ))
         }
-        <p>VER CARRINHO</p>
+        <Link
+          to="/customer/checkout"
+          data-testid="customer_products__button-cart"
+        >
+          <p data-testid="customer_products__checkout-bottom-value">
+            { `Ver carrinho: R$${totalPrice.toFixed(2)}` }
+          </p>
+        </Link>
       </main>
     </>
   );
 }
-
-// const sendToLocalStorage = () => {
-//   localStorage.setItem('myProducts', JSON.stringify(qty));
-//   // console.log('ok');
-// };
