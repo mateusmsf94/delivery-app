@@ -30,6 +30,20 @@ export default function Products() {
     refreshCarPrice();
   });
 
+  function updateQty(id, method) {
+    const productQty = qty[id] || 0;
+    if (method === 'add') { setQty({ ...qty, [id]: (productQty + 1) }); }
+
+    if (method === 'rm') {
+      const notZero = (productQty !== 0);
+      if (notZero) { setQty({ ...qty, [id]: (productQty - 1) }); }
+    }
+  }
+
+  function validateInput(id, value) {
+    if (value > 0) { setQty({ ...qty, [id]: value }); }
+  }
+
   return (
     <>
       <NavCustomer />
@@ -56,22 +70,20 @@ export default function Products() {
                 <button
                   type="button"
                   data-testid={ `customer_products__button-card-rm-item-${id}` }
-                  onClick={ () => setQty({ ...qty, [id]: (qty[id] - 1) }) }
+                  onClick={ () => updateQty(id, 'rm') }
                 >
                   -
                 </button>
                 <input
                   data-testid={ `customer_products__input-card-quantity-${id}` }
                   type="number"
-                  onChange={
-                    ({ target: { value } }) => setQty({ ...qty, [id]: Number(value) })
-                  }
+                  onChange={ ({ target: { value } }) => validateInput(id, value) }
                   value={ qty[id] || 0 }
                 />
                 <button
                   data-testid={ `customer_products__button-card-add-item-${id}` }
                   type="button"
-                  onClick={ () => setQty({ ...qty, [id]: ((qty[id] || 0) + 1) }) }
+                  onClick={ () => updateQty(id, 'add') }
                 >
                   +
                 </button>
