@@ -1,14 +1,14 @@
 const express = require('express');
-const loginRouter = require('../database/routes');
-const createUser = require('../database/controllers/UserController');
+const cors = require('cors');
+const { loginRouter, userRouter } = require('../database/routes'); // Updated import
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
 app.get('/coffee', (_req, res) => res.status(418).end());
-app.get('/login', loginRouter);
-app.get('/register', createUser);
-
-app.use(express.json());
+app.use('/login', loginRouter); // Updated usage
+app.use('/register', userRouter); // Updated usage
 
 app.use((error, _req, res, _next) => {
   if (error.status) {

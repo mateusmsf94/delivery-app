@@ -53,8 +53,42 @@ function RegisterForm() {
     validateName();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Perform client-side validation
+    validateEmail();
+    validatePassword();
+    validateName();
+
+    // Only send the request if there are no validation errors
+    if (!emailError && !passwordError && !nameError) {
+      try {
+        const response = await fetch('http://localhost:3001/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+          }),
+        });
+
+        const data = await response.json();
+        console.log('Response from server:', data);
+      } catch (error) {
+        console.error('Error submitting the form:', error);
+      }
+    }
+  };
+
   return (
-    <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+    <form
+      onSubmit={ handleSubmit }
+      className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0"
+    >
       <AuthHeader />
       <InputField
         label="Name"
@@ -102,7 +136,9 @@ function RegisterForm() {
           Register
         </button>
       </div>
-    </div>
+
+    </form>
+
   );
 }
 
