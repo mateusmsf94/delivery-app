@@ -90,7 +90,7 @@ function RegisterForm() {
         type="text"
         name="name"
         id="name"
-        dataTestId="common_register__input-name"
+        datatestid="common_register__input-name"
         value={ name }
         onChange={ handleNameChange }
       />
@@ -102,7 +102,7 @@ function RegisterForm() {
         type="email"
         name="email"
         id="email"
-        dataTestId="common_register__input-email"
+        datatestid="common_register__input-email"
         value={ email }
         onChange={ handleEmailChange }
       />
@@ -114,7 +114,7 @@ function RegisterForm() {
         type="password"
         name="password"
         id="password"
-        dataTestId="common_register__input-password"
+        datatestid="common_register__input-password"
         value={ password }
         onChange={ handlePasswordChange }
       />
@@ -124,6 +124,7 @@ function RegisterForm() {
       <div className="mx-5 my-4">
         <button
           type="submit"
+          data-testid="common_register__button-register"
           className={ `w-full text-white bg-green-700 hover:bg-primary-700
           focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg 
           px-5 py-2.5` }
