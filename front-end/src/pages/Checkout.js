@@ -3,28 +3,30 @@ import MyContext from '../MyContext';
 import NavCustomer from '../components/NavCustomer';
 
 export default function Checkout() {
-  const { dataFetch } = useContext(MyContext);
+  const { dataFetch, totalBill } = useContext(MyContext);
   const [products, setProducts] = useState([]);
   const [qty, setQty] = useState({});
 
-  function getCarData() {
-    const productData = dataFetch
-      .map((product) => (qty[product.id] ? product : ''))
-      .filter((product) => product !== '');
-
-    setProducts(productData);
-  }
+  const removeItem = (id) => {
+    const item = products.filter((ele) => ele.id !== id);
+    setProducts(item);
+  };
 
   useEffect(() => {
     const productsQty = JSON.parse(localStorage.getItem('myProducts')) || [];
     setQty(productsQty);
 
-    getCarData();
+    const productData = dataFetch
+      .map((product) => (qty[product.id] ? product : ''))
+      .filter((product) => product !== '');
+
+    setProducts(productData);
   }, []);
 
   return (
     <>
       <NavCustomer />
+      <h3>Finalizar Pedido</h3>
       <table>
         <tr>
           <th>Item</th>
@@ -44,7 +46,7 @@ export default function Checkout() {
                   `customer_checkout__element-order-table-item-number-${index}`
                 }
               >
-                { index }
+                { index + 1}
               </td>
               <td
                 data-testid={ `24: customer_checkout__element-order-table-name-${index}` }
@@ -74,7 +76,7 @@ export default function Checkout() {
                 <button
                   type="button"
                   data-testid={ `customer_checkout__element-order-table-remove-${index}` }
-                  // onClick={ remove() }
+                  onClick={ () => removeItem(id) }
                 >
                   Remover
                 </button>
@@ -83,7 +85,16 @@ export default function Checkout() {
           ))
         }
       </tbody>
-      <p />
+      <tfoot>
+        <tr>
+          <td
+            data-testid="customer_checkout__element-order-total-price"
+          >
+            {totalBill}
+          </td>
+        </tr>
+      </tfoot>
+      {/* <p>{totalBill}</p> */}
     </>
   );
 }
