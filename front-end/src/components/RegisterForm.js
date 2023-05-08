@@ -9,8 +9,8 @@ function RegisterForm() {
   const [passwordError, setPasswordError] = useState('');
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState('');
-  const minPasswordLength = 6;
-  const minNameLength = 12;
+  const minPasswordLength = 5;
+  const minNameLength = 11;
 
   const validateEmail = () => {
     // Regular expression to check for a valid email format
@@ -40,14 +40,17 @@ function RegisterForm() {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+    validateEmail();
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+    validatePassword();
   };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
+    validateName();
   };
 
   const handleSubmit = async (e) => {
@@ -79,6 +82,13 @@ function RegisterForm() {
     }
   };
 
+  const isDisabled = emailError
+    || passwordError
+    || nameError
+    || email === ''
+    || password === ''
+    || name === '';
+
   return (
     <form
       onSubmit={ handleSubmit }
@@ -94,9 +104,7 @@ function RegisterForm() {
         value={ name }
         onChange={ handleNameChange }
       />
-      {nameError && (
-        <p className="mx-5 text-sm text-red-500">{nameError}</p>
-      )}
+      {nameError && <p className="mx-5 text-sm text-red-500">{nameError}</p>}
       <InputField
         label="Email"
         type="email"
@@ -106,9 +114,7 @@ function RegisterForm() {
         value={ email }
         onChange={ handleEmailChange }
       />
-      {emailError && (
-        <p className="mx-5 text-sm text-red-500">{emailError}</p>
-      )}
+      {emailError && <p className="mx-5 text-sm text-red-500">{emailError}</p>}
       <InputField
         label="Password"
         type="password"
@@ -124,17 +130,17 @@ function RegisterForm() {
       <div className="mx-5 my-4">
         <button
           type="submit"
+          disabled={ isDisabled }
           data-testid="common_register__button-register"
           className={ `w-full text-white bg-green-700 hover:bg-primary-700
           focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg 
-          px-5 py-2.5` }
+          px-5 py-2.5
+          ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}` }
         >
           Register
         </button>
       </div>
-
     </form>
-
   );
 }
 
