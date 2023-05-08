@@ -64,6 +64,7 @@ function LoginForm() {
       if (response.ok) {
         const data = await response.json();
         console.log('Response from server:', data);
+        localStorage.setItem('user', JSON.stringify(data));
         history.push('/customer/products');
         // Handle successful login, e.g. store token, redirect to the main page, etc.
       } else {
