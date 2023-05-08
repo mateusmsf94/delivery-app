@@ -6,6 +6,7 @@ import MyContext from '../MyContext';
 export default function Products() {
   const { dataFetch, setTotalBill } = useContext(MyContext);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [qty, setQty] = useState({});
 
   function refreshCarPrice() {
@@ -17,6 +18,8 @@ export default function Products() {
 
     setTotalPrice(priceList.reduce((acc, cur) => acc + cur, 0));
     setTotalBill(totalPrice);
+
+    if (totalPrice > 0) { setIsDisabled(false); }
   }
 
   // Obten do localstorage
@@ -56,11 +59,13 @@ export default function Products() {
               key={ id }
             >
               <p
-                data-testid={ `customer_products__element-card-price-${id}` }
                 className={ `absolute m-3 bg-neutral-500
                   bg-opacity-30 p-1 rounded font-bold` }
               >
-                { `R$ ${price}` }
+                R$
+                <span data-testid={ `customer_products__element-card-price-${id}` }>
+                  {price.replace('.', ',')}
+                </span>
               </p>
               <img
                 src={ urlImage }
@@ -112,13 +117,20 @@ export default function Products() {
         }
         <Link
           to="/customer/checkout"
-          data-testid="customer_products__button-cart"
-          className={ `fixed bottom-0 right-0 m-3 bg-green-800 text-white text-bold
-            p-2 rounded` }
+          // disabled={ isDisabled }
         >
-          <p data-testid="customer_products__checkout-bottom-value">
-            { `Ver carrinho: R$${totalPrice.toFixed(2)}` }
-          </p>
+          <button
+            type="button"
+            data-testid="customer_products__button-cart"
+            className={ `fixed bottom-0 right-0 m-3 bg-green-800
+            text-white text-bold p-2 rounded` }
+            disabled={ isDisabled }
+          >
+            Ver carrinho: R$
+            <span data-testid="customer_products__checkout-bottom-value">
+              {totalPrice.toFixed(2).replace('.', ',')}
+            </span>
+          </button>
         </Link>
       </main>
     </>
