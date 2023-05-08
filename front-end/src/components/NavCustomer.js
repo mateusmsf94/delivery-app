@@ -31,8 +31,7 @@ export default function NavCustomer() {
         data-testid="customer_products__element-navbar-user-full-name"
         className="navUser text-center text-green-950"
       >
-        {/* { user.name } */}
-        TULIO AMORIM
+        { user.name }
       </p>
       <Link to="/login" className="navLogout">
         <button
