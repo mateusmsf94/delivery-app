@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import MyContext from '../MyContext';
 import NavCustomer from '../components/NavCustomer';
 
+import CheckoutTable from '../components/CheckoutTable';
 import refreshTotalPrice from '../utils/refreshTotalPrice';
 
 export default function Checkout() {
@@ -18,105 +19,61 @@ export default function Checkout() {
     setProducts(items);
   };
 
-  function getProductData() {
-    const productsQty = JSON.parse(localStorage.getItem('myProducts')) || [];
-
-    const productData = dataFetch
-      .map((product) => (productsQty[product.id] ? product : ''))
-      .filter((product) => product !== '');
-
-    const price = refreshTotalPrice(productData, productsQty);
-
-    setTotalPrice(price);
-    setQty(productsQty);
-    setProducts(productData);
-  }
-
   useEffect(() => {
+    function getProductData() {
+      const productsQty = JSON.parse(localStorage.getItem('myProducts')) || [];
+      setQty(productsQty);
+
+      const productData = dataFetch
+        .map((product) => (productsQty[product.id] ? product : ''))
+        .filter((product) => product !== '');
+      setProducts(productData);
+
+      const price = refreshTotalPrice(productData, productsQty);
+      setTotalPrice(price);
+    }
+
     getProductData();
-  }, []);
-
-  // function refreshTotal() {
-
-  // }
+  }, [dataFetch]);
 
   return (
     <>
       <NavCustomer />
-      <h3>Finalizar Pedido</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>Sub-total</th>
-            <th>Remover Item</th>
-          </tr>
-        </thead>
-        <tbody>
-          { products.map(({ id, name, price }, index) => (
-            <tr key={ index }>
-              <td
-                data-testid={
-                  `customer_checkout__element-order-table-item-number-${index}`
-                }
-              >
-                { index + 1}
-              </td>
-              <td
-                data-testid={
-                  `24: customer_checkout__element-order-table-name-${index}`
-                }
-              >
-                { name }
-              </td>
-              <td
-                data-testid={
-                  `customer_checkout__element-order-table-quantity-${index}`
-                }
-              >
-                { qty[id] }
-              </td>
-              <td
-                data-testid={
-                  `customer_checkout__element-order-table-unit-price-${index}`
-                }
-              >
-                { price }
-              </td>
-              <td
-                data-testid={
-                  `customer_checkout__element-order-table-sub-total-${index}`
-                }
-              >
-                { qty[id] * price }
-              </td>
-              <td>
-                <button
-                  type="button"
-                  data-testid={
-                    `customer_checkout__element-order-table-remove-${index}`
-                  }
-                  onClick={ () => removeItem(id) }
-                >
-                  Remover
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td
-              data-testid="customer_checkout__element-order-total-price"
-            >
-              { totalPrice.toFixed(2).replace('.', ',')}
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+      <CheckoutTable
+        props={ { totalPrice, products, qty, removeItem } }
+      />
+      <h3>Detalhes e Endereço para Entrega</h3>
+      <div className="bg-gray-100 w-4/5 mx-auto">
+        <label htmlFor="select-seller">
+          P. Vendedora Responsável:
+          <input
+            name="select-seller"
+            type="select"
+          />
+        </label>
+
+        <label htmlFor="type-address">
+          Endereço
+          <input
+            name="type-address"
+            type="text"
+          />
+        </label>
+
+        <label htmlFor="type-number">
+          Número
+          <input
+            name="type-number"
+            type="number"
+          />
+        </label>
+
+        <button
+          type="button"
+        >
+          Finalizar Pedido
+        </button>
+      </div>
     </>
   );
 }
