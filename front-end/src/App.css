@@ -1,0 +1,64 @@
+/* estilos padrão para a navbar */
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: green;
+  height: 50px;
+  width: 100%;
+}
+
+.navProduct {
+  display: flex;
+  background-color: #2FC18C;
+  width: 20%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.navPedidos {
+  display: flex;
+  background-color: #036B52;
+  width: 70%;
+  height: 100%;
+  align-items: center;
+  justify-content: left;
+  /* margin-right: ; */
+  padding-left: 20px;
+  font-weight: bold;
+}
+
+.navUser {
+  display: flex;
+  background-color: #421981;
+  width: 15%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  /* padding-left: 50px; */
+}
+
+.navLogout {
+  display: flex;
+  background-color: #056CF9;
+  width: 10%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+.navPedidos {
+  justify-content: center;
+  width: 50%;
+  padding-left: 5px;
+}
+
+.navUser {
+  width: 35%;
+}
+}
