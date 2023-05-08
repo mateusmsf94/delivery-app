@@ -3,20 +3,15 @@ import { Link } from 'react-router-dom';
 import NavCustomer from '../components/NavCustomer';
 import MyContext from '../MyContext';
 
+import refreshTotalPrice from '../utils/refreshTotalPrice';
+
 export default function Products() {
-  const { dataFetch, setTotalBill } = useContext(MyContext);
+  const { dataFetch } = useContext(MyContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const [qty, setQty] = useState({});
 
   function refreshCarPrice() {
-    const priceList = dataFetch.map((product) => {
-      const price = (qty[product.id] * product.price);
-      const priceFixed = price ? price.toFixed(2) : 0;
-      return Number(priceFixed);
-    });
-
-    setTotalPrice(priceList.reduce((acc, cur) => acc + cur, 0));
-    setTotalBill(totalPrice);
+    setTotalPrice(refreshTotalPrice(dataFetch, qty));
   }
 
   // Obten do localstorage
