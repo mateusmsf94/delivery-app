@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import MyContext from '../MyContext';
 import NavCustomer from '../components/NavCustomer';
 
-import fetchData from '../utils/requestAPI';
+// import fetchData from '../utils/requestAPI';
 import CheckoutTable from '../components/CheckoutTable';
 import refreshTotalPrice from '../utils/refreshTotalPrice';
 
@@ -10,7 +10,7 @@ export default function Checkout() {
   const { dataFetch } = useContext(MyContext);
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [sellers, setSellers] = useState([]);
+  // const [sellers, setSellers] = useState([]);
   const [qty, setQty] = useState({});
 
   const removeItem = (id) => {
@@ -35,12 +35,12 @@ export default function Checkout() {
       setTotalPrice(price);
     }
 
-    async function getSellers() {
-      setSellers(fetchData('http://localhost:3001/sellers'));
-    }
+    // async function getSellers() {
+    //   setSellers(fetchData('http://localhost:3001/sellers'));
+    // }
 
     getProductData();
-    getSellers();
+    // getSellers();
   }, [dataFetch]);
 
   return (
@@ -58,9 +58,9 @@ export default function Checkout() {
             data-testid="customer_checkout__select-seller"
           >
             {
-              sellers.map((seller) => (
-                <option key={ seller.id } value={ seller.id }>{seler.name}</option>
-              ))
+              // sellers.map((seller) => (
+              //   <option key={ seller.id } value={ seller.id }>{seler.name}</option>
+              // ))
             }
           </select>
         </div>
