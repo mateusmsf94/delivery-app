@@ -3,23 +3,15 @@ import { Link } from 'react-router-dom';
 import NavCustomer from '../components/NavCustomer';
 import MyContext from '../MyContext';
 
+import refreshTotalPrice from '../utils/refreshTotalPrice';
+
 export default function Products() {
-  const { dataFetch, setTotalBill } = useContext(MyContext);
+  const { dataFetch } = useContext(MyContext);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [isDisabled, setIsDisabled] = useState(true);
   const [qty, setQty] = useState({});
 
   function refreshCarPrice() {
-    const priceList = dataFetch.map((product) => {
-      const price = (qty[product.id] * product.price);
-      const priceFixed = price ? price.toFixed(2) : 0;
-      return Number(priceFixed);
-    });
-
-    setTotalPrice(priceList.reduce((acc, cur) => acc + cur, 0));
-    setTotalBill(totalPrice);
-
-    if (totalPrice > 0) { setIsDisabled(false); }
+    setTotalPrice(refreshTotalPrice(dataFetch, qty));
   }
 
   // Obten do localstorage
@@ -55,17 +47,16 @@ export default function Products() {
         {
           dataFetch.map(({ id, name, price, urlImage }) => (
             <div
-              className="w-56 h-80 border m-3 bg-gray-100 shadow-md rounded-bl rounded-br"
+              className={ `w-56 h-80 border m-3 bg-gray-100
+                shadow-md rounded-bl rounded-br` }
               key={ id }
             >
               <p
+                data-testid={ `customer_products__element-card-price-${id}` }
                 className={ `absolute m-3 bg-neutral-500
                   bg-opacity-30 p-1 rounded font-bold` }
               >
-                R$
-                <span data-testid={ `customer_products__element-card-price-${id}` }>
-                  {price.replace('.', ',')}
-                </span>
+                { `R$ ${price}` }
               </p>
               <img
                 src={ urlImage }
@@ -76,7 +67,7 @@ export default function Products() {
               />
               <p
                 data-testid={ `customer_products__element-card-title-${id}` }
-                className="text-center text-green-950 mt-2"
+                className="text-center text-darkgreen mt-2"
               >
                 { name }
               </p>
@@ -85,7 +76,7 @@ export default function Products() {
                   type="button"
                   data-testid={ `customer_products__button-card-rm-item-${id}` }
                   onClick={ () => updateQty(id, 'rm') }
-                  className={ `bg-green-800 text-white text-bold w-9 h-9 rounded-tl-md
+                  className={ `bg-darkgreen text-white text-bold w-9 h-9 rounded-tl-md
                     rounded-bl-md text-3xl` }
                 >
                   -
@@ -95,7 +86,7 @@ export default function Products() {
                   type="number"
                   onChange={ ({ target: { value } }) => validateInput(id, value) }
                   value={ qty[id] || 0 }
-                  className={ `w-10 text-center border-t border-b border-green-800
+                  className={ `w-10 text-center border-t border-b border-darkgreen
                     appearance-none [-moz-appearance:_textfield] 
                     [&::-webkit-outer-spin-button]:m-0
                     [&::-webkit-outer-spin-button]:appearance-none 
@@ -106,7 +97,7 @@ export default function Products() {
                   data-testid={ `customer_products__button-card-add-item-${id}` }
                   type="button"
                   onClick={ () => updateQty(id, 'add') }
-                  className={ `bg-green-800 text-white text-bold w-9 h-9 rounded-tr-md
+                  className={ `bg-darkgreen text-white text-bold w-9 h-9 rounded-tr-md
                   rounded-br-md text-3xl` }
                 >
                   +
@@ -117,20 +108,13 @@ export default function Products() {
         }
         <Link
           to="/customer/checkout"
-          // disabled={ isDisabled }
+          data-testid="customer_products__button-cart"
+          className={ `fixed bottom-0 right-0 m-3 bg-darkgreen text-white text-bold
+            p-2 rounded` }
         >
-          <button
-            type="button"
-            data-testid="customer_products__button-cart"
-            className={ `fixed bottom-0 right-0 m-3 bg-green-800
-            text-white text-bold p-2 rounded` }
-            disabled={ isDisabled }
-          >
-            Ver carrinho: R$
-            <span data-testid="customer_products__checkout-bottom-value">
-              {totalPrice.toFixed(2).replace('.', ',')}
-            </span>
-          </button>
+          <p data-testid="customer_products__checkout-bottom-value">
+            { `Ver carrinho: R$${totalPrice.toFixed(2)}` }
+          </p>
         </Link>
       </main>
     </>
