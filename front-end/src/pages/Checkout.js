@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import MyContext from '../MyContext';
 import NavCustomer from '../components/NavCustomer';
 
-// import fetchData from '../utils/requestAPI';
+import fetchData from '../utils/requestAPI';
 import CheckoutTable from '../components/CheckoutTable';
 import refreshTotalPrice from '../utils/refreshTotalPrice';
 
@@ -10,7 +10,7 @@ export default function Checkout() {
   const { dataFetch } = useContext(MyContext);
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  // const [sellers, setSellers] = useState([]);
+  const [sellers, setSellers] = useState([]);
   const [qty, setQty] = useState({});
 
   const removeItem = (id) => {
@@ -35,12 +35,12 @@ export default function Checkout() {
       setTotalPrice(price);
     }
 
-    // async function getSellers() {
-    //   setSellers(fetchData('http://localhost:3001/sellers'));
-    // }
+    async function getSellers() {
+      setSellers(await fetchData('http://localhost:3001/products/sellers'));
+    }
 
     getProductData();
-    // getSellers();
+    getSellers();
   }, [dataFetch]);
 
   return (
@@ -51,18 +51,22 @@ export default function Checkout() {
       />
       <div className=" w-4/5 mx-auto flex flex-wrap max-w-full justify-center">
         <h3 className="font-semibold mt-6 w-full">Detalhes e Endereço para Entrega</h3>
-        <div className="mt-2 w-1/5 mr-2 font-normal text-xs">
-          P. Vendedora Responsável:
-          <select
-            className="font-normal text-xs w-full p-2"
-            data-testid="customer_checkout__select-seller"
-          >
-            {
-              // sellers.map((seller) => (
-              //   <option key={ seller.id } value={ seller.id }>{seler.name}</option>
-              // ))
-            }
-          </select>
+        <div className="mt-2 w-1/5 mr-2 ">
+          <label htmlFor="seller-select" className="font-normal text-xs">
+            P. Vendedora Responsável:
+            <select
+              name="seller-select"
+              className={ `font-normal text-xs w-full p-2 border 
+              border-black rounded bg-white` }
+              data-testid="customer_checkout__select-seller"
+            >
+              {
+                sellers.map((seller) => (
+                  <option key={ seller.id } value={ seller.id }>{seller.name}</option>
+                ))
+              }
+            </select>
+          </label>
         </div>
         <div className="mt-2 w-2/6">
           <label htmlFor="type-address" className="font-normal text-xs m-2 w-full">
@@ -91,6 +95,7 @@ export default function Checkout() {
         <div className="w-full text-center my-4">
           <button
             type="button"
+            data-testid="customer_checkout__button-submit-order"
             className="py-2 px-8 bg-darkgreen text-white rounded uppercase font-semibold"
           >
             Finalizar Pedido

@@ -12,4 +12,18 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = createUser;
+const getSellersData = async (_req, res) => {
+  try {
+    const data = await UserService.getSellers();
+    return res.status(200).json(data); 
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(error.statusCode || 500)
+      .json({ message: error.message || 'Internal Server Error' });
+  }
+};
+
+const userController = { createUser, getSellersData };
+
+module.exports = userController;
