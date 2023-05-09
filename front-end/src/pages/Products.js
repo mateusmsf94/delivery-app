@@ -47,7 +47,8 @@ export default function Products() {
         {
           dataFetch.map(({ id, name, price, urlImage }) => (
             <div
-              className="w-56 h-80 border m-3 bg-gray-100 shadow-md rounded-bl rounded-br"
+              className={ `w-56 h-80 border m-3 bg-gray-100
+                shadow-md rounded-bl rounded-br` }
               key={ id }
             >
               <p
@@ -66,7 +67,7 @@ export default function Products() {
               />
               <p
                 data-testid={ `customer_products__element-card-title-${id}` }
-                className="text-center text-green-950 mt-2"
+                className="text-center text-darkgreen mt-2"
               >
                 { name }
               </p>
@@ -75,7 +76,7 @@ export default function Products() {
                   type="button"
                   data-testid={ `customer_products__button-card-rm-item-${id}` }
                   onClick={ () => updateQty(id, 'rm') }
-                  className={ `bg-green-800 text-white text-bold w-9 h-9 rounded-tl-md
+                  className={ `bg-darkgreen text-white text-bold w-9 h-9 rounded-tl-md
                     rounded-bl-md text-3xl` }
                 >
                   -
@@ -85,7 +86,7 @@ export default function Products() {
                   type="number"
                   onChange={ ({ target: { value } }) => validateInput(id, value) }
                   value={ qty[id] || 0 }
-                  className={ `w-10 text-center border-t border-b border-green-800
+                  className={ `w-10 text-center border-t border-b border-darkgreen
                     appearance-none [-moz-appearance:_textfield] 
                     [&::-webkit-outer-spin-button]:m-0
                     [&::-webkit-outer-spin-button]:appearance-none 
@@ -96,7 +97,7 @@ export default function Products() {
                   data-testid={ `customer_products__button-card-add-item-${id}` }
                   type="button"
                   onClick={ () => updateQty(id, 'add') }
-                  className={ `bg-green-800 text-white text-bold w-9 h-9 rounded-tr-md
+                  className={ `bg-darkgreen text-white text-bold w-9 h-9 rounded-tr-md
                   rounded-br-md text-3xl` }
                 >
                   +
@@ -108,7 +109,7 @@ export default function Products() {
         <Link
           to="/customer/checkout"
           data-testid="customer_products__button-cart"
-          className={ `fixed bottom-0 right-0 m-3 bg-green-800 text-white text-bold
+          className={ `fixed bottom-0 right-0 m-3 bg-darkgreen text-white text-bold
             p-2 rounded` }
         >
           <p data-testid="customer_products__checkout-bottom-value">

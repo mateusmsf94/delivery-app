@@ -4,28 +4,30 @@ import PropTypes from 'prop-types';
 export default function CheckoutTable({ props }) {
   const { totalPrice, qty, removeItem, products } = props;
 
+  const header = [
+    'Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total', 'Remover Item',
+  ];
+
   if (!products || !qty || !products) {
     return null;
   }
 
   return (
-    <>
-      <h3>Finalizar Pedido</h3>
-      <table className="bg-gray-100 w-4/5 mx-auto">
+    <div className="w-4/5 mx-auto mt-4">
+      <h3 className="font-semibold">Finalizar Pedido</h3>
+      <table className="w-full border">
         <thead>
           <tr>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>Sub-total</th>
-            <th>Remover Item</th>
+            { header.map((option, i) => (
+              <th key={ i } className="font-normal text-xs p-2">{option}</th>
+            ))}
           </tr>
         </thead>
-        <tbody className="text-center">
+        <tbody className="text-center p-4 text-white font-semibold">
           { (products).map(({ id, name, price }, index) => (
-            <tr key={ index }>
+            <tr key={ index } className="border-b-8 border-white m-2">
               <td
+                className="bg-lightgreen px-1 py-1 text-black border-r-1 border-l-1"
                 data-testid={
                   `customer_checkout__element-order-table-item-number-${index}`
                 }
@@ -33,34 +35,45 @@ export default function CheckoutTable({ props }) {
                 { index + 1}
               </td>
               <td
+                className="bg-lightgray text-black font-normal"
                 data-testid={
                   `24: customer_checkout__element-order-table-name-${index}`
                 }
               >
                 { name }
               </td>
-              <td
-                data-testid={
-                  `customer_checkout__element-order-table-quantity-${index}`
-                }
-              >
-                { qty[id] }
+              <td className="bg-darkgreen">
+                <span
+                  data-testid={
+                    `customer_checkout__element-order-table-quantity-${index}`
+                  }
+                >
+                  { qty[id] }
+                </span>
+              </td>
+              <td className="bg-purple">
+                {'R$ '}
+                <span
+                  data-testid={
+                    `customer_checkout__element-order-table-unit-price-${index}`
+                  }
+                >
+                  { price.toString().replace('.', ',') }
+                </span>
+              </td>
+              <td className="bg-blue">
+                {'R$ '}
+                <span
+                  data-testid={
+                    `customer_checkout__element-order-table-sub-total-${index}`
+                  }
+                >
+                  { (qty[id] * price).toString().replace('.', ',') }
+                </span>
               </td>
               <td
-                data-testid={
-                  `customer_checkout__element-order-table-unit-price-${index}`
-                }
+                className="bg-lightgreen"
               >
-                { price }
-              </td>
-              <td
-                data-testid={
-                  `customer_checkout__element-order-table-sub-total-${index}`
-                }
-              >
-                { qty[id] * price }
-              </td>
-              <td>
                 <button
                   type="button"
                   data-testid={
@@ -75,16 +88,20 @@ export default function CheckoutTable({ props }) {
           ))}
         </tbody>
         <tfoot>
-          <tr>
-            <td
+          <td
+            className="w-full text-right pr-4 font-bold text-white bg-darkgreen"
+            colSpan="6"
+          >
+            {'Total: R$ '}
+            <span
               data-testid="customer_checkout__element-order-total-price"
             >
               { (totalPrice || 0).toFixed(2).replace('.', ',')}
-            </td>
-          </tr>
+            </span>
+          </td>
         </tfoot>
       </table>
-    </>
+    </div>
   );
 }
 
