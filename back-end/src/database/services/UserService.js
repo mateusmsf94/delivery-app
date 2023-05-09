@@ -6,7 +6,7 @@ const { createToken } = require('../utils/jwt');
 
 const createUser = async (user) => {
   const isUser = await User.findOne({
-    where: { [Op.or]: [{ name: user.name }, { email: user.email }] },
+    where: { [Op.or]: [{ email: user.email }] },
   });
   if (isUser) throw new Conflict('User already exists');
 
@@ -18,9 +18,8 @@ const createUser = async (user) => {
   });
 
   const token = createToken(userCreated.id, userCreated.name, userCreated.email, userCreated.role);
-
   return {
-    statusCode: 200, data: { ...userCreated.dataValues, token },
+    statusCode: 201, data: { ...userCreated.dataValues, token },
   };
 };
 

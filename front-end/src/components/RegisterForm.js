@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AuthHeader from './AuthHeader';
 import InputField from './InputField';
 
@@ -9,6 +10,8 @@ function RegisterForm() {
   const [passwordError, setPasswordError] = useState('');
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState('');
+  const [userExist, setUserExist] = useState('');
+  const history = useHistory();
   const minPasswordLength = 5;
   const minNameLength = 11;
 
@@ -74,8 +77,15 @@ function RegisterForm() {
           }),
         });
 
-        const data = await response.json();
-        console.log('Response from server:', data);
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Response from server:', data);
+          history.push('/customer/products');
+        } else {
+          const errorData = await response.json();
+          console.log(errorData);
+          setUserExist('User already exist');
+        }
       } catch (error) {
         console.error('Error submitting the form:', error);
       }
@@ -140,6 +150,14 @@ function RegisterForm() {
           Register
         </button>
       </div>
+      {userExist && (
+        <p
+          className="mx-5 text-sm text-red-500"
+          data-testid="common_register__element-invalid_register"
+        >
+          {userExist}
+        </p>
+      )}
     </form>
   );
 }
