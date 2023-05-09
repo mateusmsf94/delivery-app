@@ -7,8 +7,16 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      userId: DataTypes.INTEGER,
-      sellerId: DataTypes.INTEGER,
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'users', key: 'id' },
+      },
+      sellerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'users', key: 'id' },
+      },
       totalPrice: DataTypes.DECIMAL,
       deliveryAdrress: DataTypes.STRING,
       deliveryNumber: DataTypes.STRING,
