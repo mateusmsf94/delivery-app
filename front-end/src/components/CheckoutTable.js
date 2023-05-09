@@ -36,9 +36,7 @@ export default function CheckoutTable({ props }) {
               </td>
               <td
                 className="bg-lightgray text-black font-normal"
-                data-testid={
-                  `24: customer_checkout__element-order-table-name-${index}`
-                }
+                data-testid={ `customer_checkout__element-order-table-name-${index}` }
               >
                 { name }
               </td>
@@ -68,7 +66,7 @@ export default function CheckoutTable({ props }) {
                     `customer_checkout__element-order-table-sub-total-${index}`
                   }
                 >
-                  { (qty[id] * price).toString().replace('.', ',') }
+                  { (qty[id] * price).toFixed(2).replace('.', ',') }
                 </span>
               </td>
               <td

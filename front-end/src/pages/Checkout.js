@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import MyContext from '../MyContext';
 import NavCustomer from '../components/NavCustomer';
 
+import fetchData from '../utils/requestAPI';
 import CheckoutTable from '../components/CheckoutTable';
 import refreshTotalPrice from '../utils/refreshTotalPrice';
 
@@ -9,6 +10,7 @@ export default function Checkout() {
   const { dataFetch } = useContext(MyContext);
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [sellers, setSellers] = useState([]);
   const [qty, setQty] = useState({});
 
   const removeItem = (id) => {
@@ -33,7 +35,12 @@ export default function Checkout() {
       setTotalPrice(price);
     }
 
+    async function getSellers() {
+      setSellers(fetchData('http://localhost:3001/sellers'));
+    }
+
     getProductData();
+    getSellers();
   }, [dataFetch]);
 
   return (
@@ -44,20 +51,24 @@ export default function Checkout() {
       />
       <div className=" w-4/5 mx-auto flex flex-wrap max-w-full justify-center">
         <h3 className="font-semibold mt-6 w-full">Detalhes e Endereço para Entrega</h3>
-        <div className="mt-2 w-1/5 mr-2">
-          <label htmlFor="select-seller" className="font-normal text-xs">
-            P. Vendedora Responsável:
-            <input
-              className="border border-black rounded p-2 w-full"
-              name="select-seller"
-              type="select"
-            />
-          </label>
+        <div className="mt-2 w-1/5 mr-2 font-normal text-xs">
+          P. Vendedora Responsável:
+          <select
+            className="font-normal text-xs w-full p-2"
+            data-testid="customer_checkout__select-seller"
+          >
+            {
+              sellers.map((seller) => (
+                <option key={ seller.id } value={ seller.id }>{seler.name}</option>
+              ))
+            }
+          </select>
         </div>
         <div className="mt-2 w-2/6">
           <label htmlFor="type-address" className="font-normal text-xs m-2 w-full">
             Endereço
             <input
+              data-testid="customer_checkout__input-address"
               placeholder="Travessa Terceira da Castanheira, Bairro Muruci"
               className="border border-black rounded p-2 block w-full"
               name="type-address"
@@ -69,6 +80,7 @@ export default function Checkout() {
           <label htmlFor="type-number" className="font-normal text-xs m-2 w-full">
             Número
             <input
+              data-testid="customer_checkout__input-address-number"
               placeholder="198"
               className="border border-black rounded p-2 block w-full"
               name="type-number"
