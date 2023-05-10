@@ -25,9 +25,11 @@ export default function CheckoutTable({ props }) {
         </thead>
         <tbody className="text-center p-4 text-white font-semibold">
           { (products).map(({ id, name, price }, index) => (
-            <tr key={ index } className="border-b-8 border-white m-2">
+            // { border-b-8 border-white }
+            <tr key={ index } className="m-2 border-b-8 border-white">
               <td
-                className="bg-lightgreen px-1 py-1 text-black border-r-1 border-l-1"
+                className={ `bg-lightgreen px-1 py-1 text-black border-r-1
+                border-l-1 rounded-tl-md rounded-bl-md` }
                 data-testid={
                   `customer_checkout__element-order-table-item-number-${index}`
                 }

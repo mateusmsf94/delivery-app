@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { loginRouter, userRouter, productRouter } = require('../database/routes');
+const { loginRouter, userRouter, productRouter, saleRouter } = require('../database/routes');
 
 const app = express();
 app.use(cors());
@@ -13,6 +13,7 @@ app.use(express.static('public'));
 app.use('/login', loginRouter);
 app.use('/register', userRouter);
 app.use('/products', productRouter);
+app.use('/sales', saleRouter);
 
 app.use((error, _req, res, _next) => {
   if (error.status) {

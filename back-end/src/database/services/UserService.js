@@ -23,4 +23,13 @@ const createUser = async (user) => {
   };
 };
 
-module.exports = { createUser };
+const getSellers = async () => {
+  const sellers = User.findAll({
+    where: { [Op.or]: [{ role: 'seller' }] },
+    attributes: ['id', 'name'],
+  });
+
+  return sellers;
+};
+
+module.exports = { createUser, getSellers };
