@@ -16,7 +16,7 @@ module.exports = {
       sellerId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        field: 'user_id',
+        field: 'seller_id',
         references: { model: 'users', key: 'id' },
       },
       totalPrice: {
@@ -36,11 +36,13 @@ module.exports = {
       },
       saleDate: {
         type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
         allowNull: false,
         field: 'sale_date',
       },
       status: {
         type: Sequelize.STRING,
+        defaultValue: 'Pendente',
         allowNull: false,
       },
     });

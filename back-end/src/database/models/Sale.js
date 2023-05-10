@@ -18,9 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         references: { model: 'users', key: 'id' },
       },
       totalPrice: DataTypes.DECIMAL,
-      deliveryAdrress: DataTypes.STRING,
+      deliveryAddress: DataTypes.STRING,
       deliveryNumber: DataTypes.STRING,
-      saleData: DataTypes.DATE,
+      saleDate: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
       status: DataTypes.STRING,
     },
     {
