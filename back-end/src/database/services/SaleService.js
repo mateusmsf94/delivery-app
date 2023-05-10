@@ -1,7 +1,7 @@
 const { Sale } = require('../models');
 const { validateToken } = require('../utils/jwt');
 
-const createSale = async (token, data) => {
+const createSale = async (data, token) => {
   validateToken(token);
 
   const saleCreated = await Sale.create({
@@ -12,7 +12,6 @@ const createSale = async (token, data) => {
     deliveryNumber: data.number,
   });
 
-  console.log(saleCreated);
   return { statusCode: 201, data: { ...saleCreated.dataValues } };
 };
 
