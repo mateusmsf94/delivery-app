@@ -63,7 +63,6 @@ export default function Checkout() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-
             Authorization: user.token,
           },
           body: JSON.stringify({

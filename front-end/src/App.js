@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Products from './pages/Products';
 import Checkout from './pages/Checkout';
-// import Orders from './pages/Orders;
+import Orders from './pages/Orders';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           <Route path="/register" component={ Register } />
           <Route path="/customer/products" component={ Products } />
           <Route path="/customer/checkout" component={ Checkout } />
-          {/* <Route patch="/customer/orders" component= { Orders } />  */}
+          <Route patch="/customer/orders" component={ Orders } />
         </Switch>
       </div>
     </Router>
