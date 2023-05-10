@@ -72,6 +72,7 @@ export default function Checkout() {
             totalPrice,
             address,
             number,
+            qty,
           }),
         });
 

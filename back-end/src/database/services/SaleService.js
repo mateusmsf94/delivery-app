@@ -1,4 +1,4 @@
-const { Sale } = require('../models');
+const { Sale, SaleProduct } = require('../models');
 const { validateToken } = require('../utils/jwt');
 
 const createSale = async (data, token) => {
@@ -11,6 +11,15 @@ const createSale = async (data, token) => {
     deliveryAddress: data.address,
     deliveryNumber: data.number,
   });
+
+  if (saleCreated) {
+    const productsIdQty = Object.entries(data.qty);
+    productsIdQty.map(async ([id, quantity]) => {
+      if (quantity !== 0) {
+        await SaleProduct.create({ saleId: saleCreated.id, productId: id, quantity });
+      }
+    });
+  }
 
   return { statusCode: 201, data: { ...saleCreated.dataValues } };
 };
