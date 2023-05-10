@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import NavCustomer from '../components/NavCustomer';
 import fetchData from '../utils/requestAPI';
 
@@ -28,7 +29,11 @@ export default function Orders() {
       <main className=" w-4/5 grid grid-cols-2 mx-auto mt-2">
         {!orders ? null
           : orders.map((order) => (
-            <div key={ order.id } className="border shadow-md rounded m-2">
+            <Link
+              key={ order.id }
+              to={ `/customer/orders/${order.id}` }
+              className="border shadow-md rounded m-2"
+            >
               <p>
                 Pedido
                 <span data-testid={ `customer_orders__element-order-id-${order.id}` }>
@@ -49,7 +54,7 @@ export default function Orders() {
                   </span>
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
       </main>
     </>
