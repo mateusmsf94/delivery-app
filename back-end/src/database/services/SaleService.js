@@ -24,5 +24,12 @@ const createSale = async (data, token) => {
   return { statusCode: 201, data: { ...saleCreated.dataValues } };
 };
 
-const saleService = { createSale };
+const getSalesFromId = async (userId) => {
+  const saleList = await Sale.findAll({ where: { userId } });
+
+  if (!saleList) return { statusCode: 404, data: 'Not found!' };
+  return { statusCode: 200, data: [...saleList] };
+};
+
+const saleService = { createSale, getSalesFromId };
 module.exports = saleService;
