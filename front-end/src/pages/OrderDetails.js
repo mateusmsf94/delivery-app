@@ -1,10 +1,29 @@
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import NavCustomer from '../components/NavCustomer';
-// import formateDate from '../utils/formateDate';
+import fetchData from '../utils/requestAPI';
+import formateDate from '../utils/formateDate';
 
 export default function OrderDetails() {
   const header = ['Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total'];
+  const delivery = ['Pendente', 'Preparando', 'Entregue'];
   const ROUTE = 'customer_order_details';
-  // const orderFix = 4;
+  const [orderData, setOrderData] = useState({});
+  const history = useHistory();
+  const orderFix = 4;
+
+  useEffect(() => {
+    async function getOrderData() {
+      const { location: { pathname } } = history;
+      const path = pathname.split('/');
+      const orderId = path[path.length - 1];
+      const url = `http://localhost:3001/sales/${orderId}`;
+      const data = await fetchData(url);
+      setOrderData(data);
+    }
+
+    getOrderData();
+  }, [history]);
 
   return (
     <>
@@ -13,29 +32,30 @@ export default function OrderDetails() {
         <span>Detalhes do Pedido</span>
         <div>
           <p>
-            PEDIDO
+            {'PEDIDO '}
             <span
               data-testid={ `${ROUTE}__element-order-details-label-order-id` }
             >
-              {/* { (order.id).toString().padStart(orderFix, '0') } */}
+              { (orderData.id || 0).toString().padStart(orderFix, '0') }
             </span>
           </p>
           <p>
-            P. Vend:
+            {'P. Vend: '}
             <span data-testid={ `${ROUTE}__element-order-details-label-seller-name` }>
-              {}
+              { !orderData.seller ? null : orderData.seller.name }
             </span>
           </p>
           <p data-testid={ `${ROUTE}__element-order-details-label-order-date` }>
-            {/* { formateDate() } */}
+            { formateDate(orderData.saleDate) }
           </p>
           <p data-testid={ `${ROUTE}__element-order-details-label-delivery-status` }>
-            { }
+            { orderData.status }
           </p>
           <button
             type="button"
             className="bg-darkgreen rounded px-1 text-white text-sm"
             data-testid={ `${ROUTE}__button-delivery-check` }
+            disabled={ delivery.includes(orderData.status) }
             onClick={ () => console.log('oi') }
           >
             MARCAR COMO ENTREGUE
@@ -51,54 +71,55 @@ export default function OrderDetails() {
           </tr>
         </thead>
         <tbody className="text-center p-4 text-white font-semibold">
-          { ([]).map(({ id, name, price }, index) => (
-            <tr key={ index } className="m-2 border-b-8 border-white">
-              <td
-                className={ `bg-lightgreen px-1 py-1 text-black border-r-1
+          { (!orderData.product ? null
+            : orderData.product.map(({ name, price, SaleProduct }, index) => (
+              <tr key={ index } className="m-2 border-b-8 border-white">
+                <td
+                  className={ `bg-lightgreen px-1 py-1 text-black border-r-1
                 border-l-1 rounded-tl-md rounded-bl-md` }
-                data-testid={
-                  `${ROUTE}__element-order-table-item-number-${index}`
-                }
-              >
-                { index + 1}
-              </td>
-              <td
-                className="bg-lightgray text-black font-normal"
-                data-testid={ `${ROUTE}__element-order-table-name-${index}` }
-              >
-                { name }
-              </td>
-              <td className="bg-darkgreen">
-                <span
                   data-testid={
-                    `${ROUTE}__element-order-table-quantity-${index}`
+                    `${ROUTE}__element-order-table-item-number-${index}`
                   }
                 >
-                  { qty[id] }
-                </span>
-              </td>
-              <td className="bg-purple">
-                {'R$ '}
-                <span
-                  data-testid={
-                    `${ROUTE}__element-order-table-unit-price-${index}`
-                  }
+                  { index + 1}
+                </td>
+                <td
+                  className="bg-lightgray text-black font-normal"
+                  data-testid={ `${ROUTE}__element-order-table-name-${index}` }
                 >
-                  { price.toString().replace('.', ',') }
-                </span>
-              </td>
-              <td className="bg-blue">
-                {'R$ '}
-                <span
-                  data-testid={
-                    `${ROUTE}__element-order-table-sub-total-${index}`
-                  }
-                >
-                  { (qty[id] * price).toFixed(2).replace('.', ',') }
-                </span>
-              </td>
-            </tr>
-          ))}
+                  { name }
+                </td>
+                <td className="bg-darkgreen">
+                  <span
+                    data-testid={
+                      `${ROUTE}__element-order-table-quantity-${index}`
+                    }
+                  >
+                    { SaleProduct.quantity }
+                  </span>
+                </td>
+                <td className="bg-purple">
+                  {'R$ '}
+                  <span
+                    data-testid={
+                      `${ROUTE}__element-order-table-unit-price-${index}`
+                    }
+                  >
+                    { price.toString().replace('.', ',') }
+                  </span>
+                </td>
+                <td className="bg-blue">
+                  {'R$ '}
+                  <span
+                    data-testid={
+                      `${ROUTE}__element-order-table-sub-total-${index}`
+                    }
+                  >
+                    { (SaleProduct.quantity * price).toFixed(2).replace('.', ',') }
+                  </span>
+                </td>
+              </tr>
+            )))}
         </tbody>
         <tfoot>
           <td
@@ -109,7 +130,8 @@ export default function OrderDetails() {
             <span
               data-testid={ `${ROUTE}__element-order-total-price` }
             >
-              { (0).toFixed(2).replace('.', ',')}
+              { !orderData.totalPrice ? null
+                : orderData.totalPrice.toString().replace('.', ',')}
             </span>
           </td>
         </tfoot>

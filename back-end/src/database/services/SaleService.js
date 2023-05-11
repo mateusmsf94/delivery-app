@@ -32,7 +32,7 @@ const getSalesFromUser = async (userId) => {
 };
 
 const getSalesById = async (saleId) => {
-  const saleList = await Sale.findAll({
+  const saleList = await Sale.findOne({
     where: { id: saleId },
     include: [
       { model: User, as: 'seller', attributes: ['id', 'name'] },
