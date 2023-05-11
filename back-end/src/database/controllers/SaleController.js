@@ -30,7 +30,7 @@ const getSaleById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const data = await saleService.getSaleById(id);
+    const data = await saleService.getSalesById(id);
 
     return res.status(data.status).json(data.message);
   } catch (error) {

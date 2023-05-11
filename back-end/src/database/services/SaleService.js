@@ -1,4 +1,4 @@
-const { Sale, SaleProduct } = require('../models');
+const { Sale, SaleProduct, User, Product } = require('../models');
 const { validateToken } = require('../utils/jwt');
 
 const createSale = async (data, token) => {
@@ -25,16 +25,25 @@ const createSale = async (data, token) => {
 };
 
 const getSaleProductById = async (id) => {
-  const data = await SaleProduct.findAll({ where: { saleId: id } });
+  const data = await SaleProduct.findAll({
+    where: { saleId: id },
+    include: [{ model: Sale }],
+  });
 
   return { status: 200, message: data };
 };
 
-const getSaleById = async (id) => {
-  const data = await Sale.findByPk(id);
+const getSalesById = async (saleId) => {
+  const data = await Sale.findAll({
+    where: { id: saleId },
+    include: [
+      { model: User, as: 'seller', attributes: ['id', 'name'] },
+      { model: Product, as: 'product', attributes: ['id', 'name', 'price'] },
+    ],
+  });
 
   return { status: 200, message: data };
 };
 
-const saleService = { createSale, getSaleProductById, getSaleById };
+const saleService = { createSale, getSaleProductById, getSalesById };
 module.exports = saleService;

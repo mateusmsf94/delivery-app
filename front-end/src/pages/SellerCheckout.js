@@ -31,20 +31,15 @@ export default function SellerCheckout() {
 
   useEffect(() => {
     const getProductData = async () => {
-      const fetch = await fetchData(url);
+      const fet = await fetchData(url);
+      setDataResult(fet);
 
-      return setDataResult(fetch);
+      setDataSale(await fetchData(url2));
     };
-
-    const getSaleData = async () => {
-      const fetch = await fetchData(url2);
-      console.log('getSaleData', dataSale);
-      setDataSale(fetch);
-    };
-
     getProductData();
-    getSaleData();
   }, []);
+
+  console.log('dataResult', dataResult);
 
   return (
     <div>
@@ -106,12 +101,44 @@ export default function SellerCheckout() {
                     `seller_order_details__element-order-table-name-${index}`
                   }
                 >
-                  { ele.name }
+                  { ele.name}
+                </td>
+                <td className="bg-lightgray text-black font-normal">
+                  10
+                  {/* { ele[dataSale.productId]} */}
+                </td>
+                <td className="bg-blue">
+                  {'R$ '}
+                  <span
+                    data-testid={
+                      `seller_order_details__element-order-table-unit-price-${index}`
+                    }
+                  >
+                    {/* { ele.price.replace('.', ',') } */}
+                  </span>
+                </td>
+                <td className="bg-blue">
+                  {'R$ '}
+                  <span
+                    data-testid={
+                      `seller_order_details__element-order-table-sub-total-${index}`
+                    }
+                  >
+                    {/* { ele.price * 2 } */}
+                  </span>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <p
+          className="w-full text-right pr-4 font-bold text-white bg-darkgreen"
+          colSpan="6"
+        >
+          {'TOTAL: R$ '}
+          { dataResult.totalPrice }
+
+        </p>
       </div>
     </div>
   );
