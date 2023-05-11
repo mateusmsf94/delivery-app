@@ -24,5 +24,11 @@ const createSale = async (data, token) => {
   return { statusCode: 201, data: { ...saleCreated.dataValues } };
 };
 
-const saleService = { createSale };
+const getSaleById = async (id) => {
+  const data = await SaleProduct.findByPk(id);
+
+  return { status: 200, message: data };
+};
+
+const saleService = { createSale, getSaleById };
 module.exports = saleService;

@@ -16,10 +16,14 @@ export default function NavCustomer() {
       <Link
         className="navProduct"
         to="/customer/products"
-        data-testid="customer_products__element-navbar-link-orders"
+        data-testid="customer_products__element-navbar-link-products"
       >
         Produtos
       </Link>
+      <p
+        className="navPedidos2"
+        data-testid="customer_products__element-navbar-link-orders"
+      />
       <p
         data-testid="customer_products__element-navbar-user-full-name"
         className="navUser text-center text-black-950"

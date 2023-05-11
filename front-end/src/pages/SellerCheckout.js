@@ -3,7 +3,7 @@ import fetchData from '../utils/requestAPI';
 import NavSeller from '../components/NavSeller';
 
 export default function SellerCheckout() {
-  const url = 'http://localhost:3001/products/1';
+  const url = 'http://localhost:3001/sales/1';
 
   useEffect(() => {
     const getProductData = async () => {
@@ -21,5 +21,3 @@ export default function SellerCheckout() {
     </div>
   );
 }
-
-// http://localhost:3001/products/1

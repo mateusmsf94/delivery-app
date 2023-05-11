@@ -13,5 +13,18 @@ const createSale = async (req, res) => {
   }
 };
 
-const saleController = { createSale };
+const getSaleById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    // if (!req.params) throw Object({ status: 404, message: 'body is missing' });
+
+    const data = await SaleService.getSaleById(id);
+
+    return res.status(data.status).json(data.message);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const saleController = { createSale, getSaleById };
 module.exports = saleController;
