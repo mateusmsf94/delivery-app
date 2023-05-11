@@ -30,5 +30,11 @@ const getSaleProductById = async (id) => {
   return { status: 200, message: data };
 };
 
-const saleService = { createSale, getSaleProductById };
+const getSaleById = async (id) => {
+  const data = await Sale.findByPk(id);
+
+  return { status: 200, message: data };
+};
+
+const saleService = { createSale, getSaleProductById, getSaleById };
 module.exports = saleService;

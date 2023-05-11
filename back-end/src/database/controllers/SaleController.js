@@ -1,4 +1,5 @@
 const { SaleService } = require('../services');
+const saleService = require('../services/SaleService');
 
 const createSale = async (req, res) => {
   try {
@@ -16,7 +17,6 @@ const createSale = async (req, res) => {
 const getSaleProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    // if (!req.params) throw Object({ status: 404, message: 'body is missing' });
 
     const data = await SaleService.getSaleProductById(id);
 
@@ -26,5 +26,17 @@ const getSaleProductById = async (req, res, next) => {
   }
 };
 
-const saleController = { createSale, getSaleProductById };
+const getSaleById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const data = await saleService.getSaleById(id);
+
+    return res.status(data.status).json(data.message);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const saleController = { createSale, getSaleProductById, getSaleById };
 module.exports = saleController;
