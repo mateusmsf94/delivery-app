@@ -19,7 +19,7 @@ function App() {
           <Route path="/customer/products" component={ Products } />
           <Route path="/customer/checkout" component={ Checkout } />
           {/* <Route patch="/customer/orders" component= { Orders } />  */}
-          <Route path="/seller/checkout" component={ SellerCheckout } />
+          <Route path="/seller/checkout/" component={ SellerCheckout } />
         </Switch>
       </div>
     </Router>

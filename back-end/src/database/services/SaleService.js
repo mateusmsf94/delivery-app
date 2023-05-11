@@ -25,16 +25,13 @@ const createSale = async (data, token) => {
 };
 
 const getSaleProductById = async (id) => {
-  const data = await SaleProduct.findAll({
-    where: { saleId: id },
-    include: [{ model: Sale }],
-  });
+  const data = await SaleProduct.findByPk(id);
 
   return { status: 200, message: data };
 };
 
 const getSalesById = async (saleId) => {
-  const data = await Sale.findAll({
+  const data = await Sale.findOne({
     where: { id: saleId },
     include: [
       { model: User, as: 'seller', attributes: ['id', 'name'] },

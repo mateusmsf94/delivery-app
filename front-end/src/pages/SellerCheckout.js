@@ -1,12 +1,10 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import fetchData from '../utils/requestAPI';
 import NavSeller from '../components/NavSeller';
-import MyContext from '../MyContext';
 
 export default function SellerCheckout() {
-  const { dataFetch } = useContext(MyContext);
-  const [dataResult, setDataResult] = useState({});
-  const [dataSale, setDataSale] = useState([]);
+  const [dataResult, setDataResult] = useState([]);
+  const [setDataSale] = useState([]);
 
   const url = 'http://localhost:3001/sales/1';
   const url2 = 'http://localhost:3001/sales/product/1';
@@ -31,8 +29,8 @@ export default function SellerCheckout() {
 
   useEffect(() => {
     const getProductData = async () => {
-      const fet = await fetchData(url);
-      setDataResult(fet);
+      const data = await fetchData(url);
+      setDataResult(data);
 
       setDataSale(await fetchData(url2));
     };
@@ -84,7 +82,7 @@ export default function SellerCheckout() {
             </tr>
           </thead>
           <tbody className="text-center p-4 text-white font-semibold">
-            { dataFetch.map((ele, index) => (
+            { dataResult.product?.map((ele, index) => (
               <tr key={ index } className="text-center p-4 text-white font-semibold">
                 <td
                   className={ `bg-lightgreen px-1 py-1 text-black border-r-1
@@ -101,11 +99,10 @@ export default function SellerCheckout() {
                     `seller_order_details__element-order-table-name-${index}`
                   }
                 >
-                  { ele.name}
+                  { ele.name }
                 </td>
                 <td className="bg-lightgray text-black font-normal">
-                  10
-                  {/* { ele[dataSale.productId]} */}
+                  { ele.SaleProduct.quantity }
                 </td>
                 <td className="bg-blue">
                   {'R$ '}
@@ -114,7 +111,7 @@ export default function SellerCheckout() {
                       `seller_order_details__element-order-table-unit-price-${index}`
                     }
                   >
-                    {/* { ele.price.replace('.', ',') } */}
+                    { ele.price.replace('.', ',') }
                   </span>
                 </td>
                 <td className="bg-blue">
@@ -124,7 +121,7 @@ export default function SellerCheckout() {
                       `seller_order_details__element-order-table-sub-total-${index}`
                     }
                   >
-                    {/* { ele.price * 2 } */}
+                    { (ele.price * ele.SaleProduct.quantity).toFixed(2) }
                   </span>
                 </td>
               </tr>
