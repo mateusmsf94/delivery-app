@@ -28,10 +28,10 @@ export default function OrderDetails() {
   return (
     <>
       <NavCustomer />
-      <div className="w-4/5 mx-auto mt-4">
+      <div className="w-4/5 mx-auto mt-4 text-sm">
         <span>Detalhes do Pedido</span>
-        <div>
-          <p>
+        <div className="border border-b-0 flex justify-between items-center h-8">
+          <p className="font-semibold ml-2">
             {'PEDIDO '}
             <span
               data-testid={ `${ROUTE}__element-order-details-label-order-id` }
@@ -45,15 +45,21 @@ export default function OrderDetails() {
               { !orderData.seller ? null : orderData.seller.name }
             </span>
           </p>
-          <p data-testid={ `${ROUTE}__element-order-details-label-order-date` }>
+          <p
+            data-testid={ `${ROUTE}__element-order-details-label-order-date` }
+            className="bg-neutral-500 bg-opacity-30 rounded px-2"
+          >
             { formateDate(orderData.saleDate) }
           </p>
-          <p data-testid={ `${ROUTE}__element-order-details-label-delivery-status` }>
+          <p
+            data-testid={ `${ROUTE}__element-order-details-label-delivery-status` }
+            className="bg-green-300 rounded px-2"
+          >
             { orderData.status }
           </p>
           <button
             type="button"
-            className="bg-darkgreen rounded px-1 text-white text-sm"
+            className="bg-darkgreen rounded px-1 text-white text-sm mr-2"
             data-testid={ `${ROUTE}__button-delivery-check` }
             disabled={ delivery.includes(orderData.status) }
             onClick={ () => console.log('oi') }
@@ -62,7 +68,7 @@ export default function OrderDetails() {
           </button>
         </div>
       </div>
-      <table className="w-4/5 border mx-auto mt-2">
+      <table className="w-4/5 border mx-auto">
         <thead>
           <tr>
             { header.map((option, i) => (
@@ -76,7 +82,7 @@ export default function OrderDetails() {
               <tr key={ index } className="m-2 border-b-8 border-white">
                 <td
                   className={ `bg-lightgreen px-1 py-1 text-black border-r-1
-                border-l-1 rounded-tl-md rounded-bl-md` }
+                border-l-1` }
                   data-testid={
                     `${ROUTE}__element-order-table-item-number-${index}`
                   }
