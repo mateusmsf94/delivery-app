@@ -13,12 +13,12 @@ const createSale = async (req, res) => {
   }
 };
 
-const getSaleById = async (req, res, next) => {
+const getSaleProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
     // if (!req.params) throw Object({ status: 404, message: 'body is missing' });
 
-    const data = await SaleService.getSaleById(id);
+    const data = await SaleService.getSaleProductById(id);
 
     return res.status(data.status).json(data.message);
   } catch (error) {
@@ -26,5 +26,5 @@ const getSaleById = async (req, res, next) => {
   }
 };
 
-const saleController = { createSale, getSaleById };
+const saleController = { createSale, getSaleProductById };
 module.exports = saleController;
