@@ -6,8 +6,10 @@ import MyContext from '../MyContext';
 export default function SellerCheckout() {
   const { dataFetch } = useContext(MyContext);
   const [dataResult, setDataResult] = useState({});
+  const [dataSale, setDataSale] = useState([]);
 
   const url = 'http://localhost:3001/sales/1';
+  const url2 = 'http://localhost:3001/sales/product/1';
 
   const four = 4;
 
@@ -16,60 +18,100 @@ export default function SellerCheckout() {
   ];
 
   const formatDate = () => {
-    const dataString = '2023-05-10T22:45:13.000Z';
-    const date = new Date(dataString);
+    const date = new Date(dataResult.saleDate);
 
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear().toString();
 
     const validDate = `${day}-${month}-${year}`;
-    console.log(validDate.replace(/-/g, '/'));
-    return validDate;
+
+    return validDate.replace(/-/g, '/');
   };
 
   useEffect(() => {
     const getProductData = async () => {
       const fetch = await fetchData(url);
 
-      console.log(fetch);
-      console.log('dataResult', dataResult);
       return setDataResult(fetch);
     };
 
+    const getSaleData = async () => {
+      const fetch = await fetchData(url2);
+      console.log('getSaleData', dataSale);
+      setDataSale(fetch);
+    };
+
     getProductData();
-    formatDate();
+    getSaleData();
   }, []);
 
   return (
     <div>
       <NavSeller />
-      <div>
-        <h3>Detalhe do Pedido</h3>
+      <h3>Detalhe do Pedido</h3>
+      <div className="details">
         <p
           data-testid="seller_order_details__element-order-details-label-order-id"
         >
-          {/* { `PEDIDO ${dataResult.id.padStart(four, '0')}`} */}
+          { `PEDIDO ${dataResult.id?.toString().padStart(four, '0')}`}
         </p>
         <p
           data-testid="seller_order_details__element-order-details-label-order-date"
         >
-          10/05/2023
+          { formatDate()}
         </p>
         <p
           data-testid="seller_order_details__element-order-details-label-delivery-status"
         >
-          {/* { dataFetch.status } */}
+          { dataResult.status }
         </p>
-        <div>
-          <table className="w-full border">
-            <thead>
+        <button
+          type="button"
+          data-testid="seller_order_details__button-preparing-check"
+        >
+          PREPARAR PEDIDO
+        </button>
+        <button
+          type="button"
+          data-testid="seller_order_details__button-dispatch-check"
+        >
+          SAIU PARA ENTREGA
+        </button>
+      </div>
+      <div>
+        <table className="w-full border">
+          <thead>
+            <tr>
               { header.map((option, index) => (
                 <th key={ index } className="font-normal text-xs p-2">{option}</th>
               ))}
-            </thead>
-          </table>
-        </div>
+            </tr>
+          </thead>
+          <tbody className="text-center p-4 text-white font-semibold">
+            { dataFetch.map((ele, index) => (
+              <tr key={ index } className="text-center p-4 text-white font-semibold">
+                <td
+                  className={ `bg-lightgreen px-1 py-1 text-black border-r-1
+                border-l-1 rounded-tl-md rounded-bl-md` }
+                  data-testid={
+                    `seller_order_details__element-order-table-item-number-${index}`
+                  }
+                >
+                  { index + 1 }
+                </td>
+                <td
+                  className="bg-lightgray text-black font-normal"
+                  data-testid={
+                    `seller_order_details__element-order-table-name-${index}`
+                  }
+                >
+                  { ele.name }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

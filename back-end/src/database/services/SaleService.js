@@ -25,7 +25,7 @@ const createSale = async (data, token) => {
 };
 
 const getSaleProductById = async (id) => {
-  const data = await SaleProduct.findByPk(id);
+  const data = await SaleProduct.findAll({ where: { saleId: id } });
 
   return { status: 200, message: data };
 };
