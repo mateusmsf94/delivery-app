@@ -16,7 +16,7 @@ export default function NavCustomer() {
       <Link
         className="navProduct"
         to="/customer/products"
-        data-testid="customer_products__element-navbar-link-products"
+        data-testid="customer_products__element-navbar-link-orders"
       >
         Produtos
       </Link>
