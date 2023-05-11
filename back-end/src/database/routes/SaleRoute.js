@@ -3,7 +3,8 @@ const saleController = require('../controllers/SaleController');
 
 const saleRouter = express.Router();
 
-saleRouter.get('/:id', saleController.getSalesFromId);
+saleRouter.get('/user/:id', saleController.getSalesFromUser);
+saleRouter.get('/:id', saleController.getSalesById);
 saleRouter.post('/', saleController.createSale);
 
 module.exports = saleRouter;

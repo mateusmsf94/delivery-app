@@ -10,7 +10,8 @@ export default function Orders() {
   useEffect(() => {
     async function getOrders() {
       const user = JSON.parse(localStorage.getItem('user'));
-      setOrders(await fetchData(`http://localhost:3001/sales/${user.id}`));
+      const url = `http://localhost:3001/sales/user/${user.id}`;
+      setOrders(await fetchData(url));
     }
 
     getOrders();
