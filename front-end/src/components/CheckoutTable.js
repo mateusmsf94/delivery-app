@@ -29,7 +29,7 @@ export default function CheckoutTable({ props }) {
             <tr key={ index } className="m-2 border-b-8 border-white">
               <td
                 className={ `bg-lightgreen px-1 py-1 text-black border-r-1
-                border-l-1 rounded-tl-md rounded-bl-md` }
+                border-l-1` }
                 data-testid={
                   `customer_checkout__element-order-table-item-number-${index}`
                 }

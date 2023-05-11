@@ -1,4 +1,4 @@
-const { Sale, SaleProduct } = require('../models');
+const { Sale, SaleProduct, User, Product } = require('../models');
 const { validateToken } = require('../utils/jwt');
 
 const createSale = async (data, token) => {
@@ -24,12 +24,25 @@ const createSale = async (data, token) => {
   return { statusCode: 201, data: { ...saleCreated.dataValues } };
 };
 
-const getSalesFromId = async (userId) => {
+const getSalesFromUser = async (userId) => {
   const saleList = await Sale.findAll({ where: { userId } });
 
   if (!saleList) return { statusCode: 404, data: 'Not found!' };
   return { statusCode: 200, data: [...saleList] };
 };
 
-const saleService = { createSale, getSalesFromId };
+const getSalesById = async (saleId) => {
+  const saleList = await Sale.findOne({
+    where: { id: saleId },
+    include: [
+      { model: User, as: 'seller', attributes: ['id', 'name'] },
+      { model: Product, as: 'product', attributes: ['id', 'name', 'price'] },
+    ],
+  });
+
+  if (!saleList) return { statusCode: 404, data: 'Not found!' };
+  return { statusCode: 200, data: saleList };
+};
+
+const saleService = { createSale, getSalesFromUser, getSalesById };
 module.exports = saleService;
