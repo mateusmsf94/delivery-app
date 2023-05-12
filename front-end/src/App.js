@@ -21,7 +21,7 @@ function App() {
           <Route path="/customer/checkout" component={ Checkout } />
           <Route path="/customer/orders/:id" component={ OrderDetails } />
           <Route path="/customer/orders" component={ Orders } />
-          <Route path="/seller/checkout" component={ SellerCheckout } />
+          <Route path="/seller/orders/:id" component={ SellerCheckout } />
         </Switch>
       </div>
     </Router>
