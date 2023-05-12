@@ -92,9 +92,9 @@ export default function Checkout() {
       <CheckoutTable
         props={ { totalPrice, products, qty, removeItem } }
       />
-      <div className=" w-4/5 mx-auto flex flex-wrap max-w-full justify-center">
+      <div className="w-4/5 mx-auto flex flex-wrap max-w-full justify-center">
         <h3 className="font-semibold mt-6 w-full">Detalhes e Endereço para Entrega</h3>
-        <div className="mt-2 w-1/5 mr-2 ">
+        <div className="mt-2 w-1/5 mr-2">
           <SelectInput
             sellers={ sellers }
             value={ sellerId }

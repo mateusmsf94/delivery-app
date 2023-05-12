@@ -10,22 +10,26 @@ export default function NavAdmin() {
   }, []);
 
   return (
-    <nav className="navBar">
-      <p data-testid="customer_products__element-navbar-link-orders">
+    <nav className="w-full bg-darkgreen flex justify-between">
+      <p
+        className="text-sm px-2 bg-lightgreen h-full py-2 font-semibold"
+        data-testid="customer_products__element-navbar-link-orders"
+      >
         GERENCIAR USUÁRIOS
       </p>
       <div>
         <p
           data-testid="customer_products__element-navbar-user-full-name"
-          className="navUser text-center text-black-950"
+          className="bg-purple px-2"
         >
           { user.name }
         </p>
-        <Link to="/login" className="navLogout">
+        <Link to="/login">
           <button
             type="button"
+            className="h-full bg-blue px-6 text-white"
             data-testid="customer_products__element-navbar-link-logout"
-            onClick={ logOut }
+            onClick={ () => localStorage.removeItem('user') }
           >
             Sair
           </button>
