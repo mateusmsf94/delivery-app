@@ -8,7 +8,7 @@ export default function SellerCheckout() {
 
   const history = useHistory();
 
-  const url = 'http://localhost:3001/sales/1';
+  // const url = 'http://localhost:3001/sales/1';
   const pathName = history.location.pathname;
   const realURL = `http://localhost:3001/sales/${pathName.charAt(pathName.length - 1)}`;
 
@@ -45,32 +45,37 @@ export default function SellerCheckout() {
   console.log('URL', realURL);
 
   return (
-    <div>
+    <div className="w-4/5 mx-auto mt-4">
       <NavSeller />
-      <h3>Detalhe do Pedido</h3>
+      <h3 className="font-semibold">Detalhe do Pedido</h3>
       <div className="details">
         <p
+          className="font-bold text-gray-800 mb-2"
           data-testid="seller_order_details__element-order-details-label-order-id"
         >
           { `PEDIDO ${dataResult.id?.toString().padStart(four, '0')}`}
         </p>
         <p
+          className="font-bold text-gray-800 mb-2"
           data-testid="seller_order_details__element-order-details-label-order-date"
         >
           { formatDate()}
         </p>
         <p
+          className="font-bold text-gray-800 mb-2 bg-yellow-500 pendente"
           data-testid="seller_order_details__element-order-details-label-delivery-status"
         >
           { dataResult.status }
         </p>
         <button
+          className="font-bold text-gray-800 mb-2 preparar"
           type="button"
           data-testid="seller_order_details__button-preparing-check"
         >
           PREPARAR PEDIDO
         </button>
         <button
+          className="font-bold text-gray-800 mb-2 saiu"
           type="button"
           data-testid="seller_order_details__button-dispatch-check"
         >
