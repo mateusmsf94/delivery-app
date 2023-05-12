@@ -80,6 +80,7 @@
   justify-content: space-around;
 }
 
+
 @media screen and (max-width: 600px) {
 .navPedidos {
   justify-content: center;

@@ -91,7 +91,7 @@ export default function SellerCheckout() {
               <tr key={ index } className="text-center p-4 text-white font-semibold">
                 <td
                   className={ `bg-lightgreen px-1 py-1 text-black border-r-1
-                border-l-1 rounded-tl-md rounded-bl-md` }
+                  border-l-1 rounded-tl-md rounded-bl-md` }
                   data-testid={
                     `seller_order_details__element-order-table-item-number-${index}`
                   }
@@ -106,10 +106,10 @@ export default function SellerCheckout() {
                 >
                   { ele.name }
                 </td>
-                <td className="bg-lightgray text-black font-normal">
+                <td className="bg-darkgreen text-black font-normal">
                   { ele.SaleProduct.quantity }
                 </td>
-                <td className="bg-blue">
+                <td className="bg-purple">
                   {'R$ '}
                   <span
                     data-testid={
