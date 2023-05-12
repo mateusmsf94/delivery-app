@@ -1,6 +1,8 @@
 const { SaleService } = require('../services');
 const saleService = require('../services/SaleService');
 
+const ERROR_MESSAGE = 'Internal Server Error';
+
 const createSale = async (req, res) => {
   try {
     const { authorization } = req.headers;
@@ -10,7 +12,31 @@ const createSale = async (req, res) => {
     console.error(error);
     return res
       .status(error.statusCode || 500)
-      .json({ message: error.message || 'Internal Server Error' });
+      .json({ message: error.message || ERROR_MESSAGE });
+  }
+};
+
+const getSalesFromUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { statusCode, data } = await SaleService.getSalesFromUser(id);
+    return res.status(statusCode).json(data);
+  } catch (error) {
+    return res
+      .status(error.statusCode || 500)
+      .json({ message: error.message || ERROR_MESSAGE });
+  }
+};
+
+const getSalesById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { statusCode, data } = await SaleService.getSalesById(id);
+    return res.status(statusCode).json(data);
+  } catch (error) {
+    return res
+    .status(error.statusCode || 500)
+    .json({ message: error.message || ERROR_MESSAGE });
   }
 };
 
@@ -36,7 +62,8 @@ const getSaleById = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
-const saleController = { createSale, getSaleProductById, getSaleById };
+const saleController = {
+  createSale, getSaleProductById, getSaleById, getSalesFromUser, getSalesById };
 module.exports = saleController;

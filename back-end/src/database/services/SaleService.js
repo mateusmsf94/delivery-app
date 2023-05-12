@@ -24,14 +24,15 @@ const createSale = async (data, token) => {
   return { statusCode: 201, data: { ...saleCreated.dataValues } };
 };
 
-const getSaleProductById = async (id) => {
-  const data = await SaleProduct.findByPk(id);
+const getSalesFromUser = async (userId) => {
+  const saleList = await Sale.findAll({ where: { userId } });
 
-  return { status: 200, message: data };
+  if (!saleList) return { statusCode: 404, data: 'Not found!' };
+  return { statusCode: 200, data: [...saleList] };
 };
 
 const getSalesById = async (saleId) => {
-  const data = await Sale.findOne({
+  const saleList = await Sale.findOne({
     where: { id: saleId },
     include: [
       { model: User, as: 'seller', attributes: ['id', 'name'] },
@@ -39,8 +40,16 @@ const getSalesById = async (saleId) => {
     ],
   });
 
+  if (!saleList) return { statusCode: 404, data: 'Not found!' };
+  return { statusCode: 200, data: saleList };
+};
+
+const getSaleProductById = async (id) => {
+  const data = await SaleProduct.findByPk(id);
+
   return { status: 200, message: data };
 };
 
-const saleService = { createSale, getSaleProductById, getSalesById };
+const saleService = {
+  createSale, getSaleProductById, getSalesById, getSalesFromUser };
 module.exports = saleService;
