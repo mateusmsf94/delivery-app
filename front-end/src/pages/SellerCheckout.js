@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import fetchData from '../utils/requestAPI';
 import NavSeller from '../components/NavSeller';
 
 export default function SellerCheckout() {
   const [dataResult, setDataResult] = useState([]);
-  const [setDataSale] = useState([]);
+
+  const history = useHistory();
 
   const url = 'http://localhost:3001/sales/1';
-  const url2 = 'http://localhost:3001/sales/product/1';
+  const pathName = history.location.pathname;
+  const realURL = `http://localhost:3001/sales/${pathName.charAt(pathName.length - 1)}`;
 
   const four = 4;
 
@@ -29,15 +32,17 @@ export default function SellerCheckout() {
 
   useEffect(() => {
     const getProductData = async () => {
-      const data = await fetchData(url);
-      setDataResult(data);
-
-      setDataSale(await fetchData(url2));
+      const data = await fetchData(realURL);
+      if (data !== null && data !== undefined) {
+        setDataResult(data);
+      }
     };
+
     getProductData();
   }, []);
 
-  console.log('dataResult', dataResult);
+  console.log(pathName.charAt(pathName.length - 1));
+  console.log('URL', realURL);
 
   return (
     <div>
