@@ -44,6 +44,9 @@ export default function Admin() {
     }
   };
 
+  const validateInputs = userName && userEmail && userPassword
+    && !passwordError && !emailError && !nameError;
+
   return (
     <>
       <NavAdmin />
@@ -86,7 +89,7 @@ export default function Admin() {
         <label htmlFor="user-type" className="font-normal text-xs m-2 w-full">
           Tipo
           <select
-            data-testid={ `${ROUTE}__select-seller` }
+            data-testid={ `${ROUTE}__select-role` }
             className="border border-black rounded p-2 block w-full"
             onChange={ ({ target: { value } }) => setUserRole(value) }
           >
@@ -97,6 +100,7 @@ export default function Admin() {
         </label>
         <button
           type="button"
+          disabled={ !validateInputs }
           className="py-2 px-8 bg-darkgreen text-white rounded uppercase font-semibold"
           data-testid={ `${ROUTE}__button-register` }
         >
