@@ -8,6 +8,23 @@ function Login() {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
 
+    function redirectByRoel(role) {
+      switch (role) {
+      case 'customer':
+        history.push('/customer/products');
+        break;
+      case 'seller':
+        history.push('/seller/orders');
+        break;
+      case 'administrator':
+        history.push('/admin/manage');
+        break;
+      default:
+        console.log('Error');
+        break;
+      }
+    }
+
     if (user && user.token) {
       fetch('http://localhost:3001/login/validate', {
         method: 'POST',
@@ -18,7 +35,7 @@ function Login() {
       })
         .then((res) => {
           if (res.ok) {
-            history.push('/customer/products');
+            redirectByRoel(user.role);
           } else {
             console.log('Token is invalid or expired');
             // Clear the invalid token from localStorage

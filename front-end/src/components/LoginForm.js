@@ -45,6 +45,23 @@ function LoginForm() {
     history.push('/register');
   };
 
+  function redirectByRoel(role) {
+    switch (role) {
+    case 'customer':
+      history.push('/customer/products');
+      break;
+    case 'seller':
+      history.push('/seller/orders');
+      break;
+    case 'administrator':
+      history.push('/admin/manage');
+      break;
+    default:
+      console.log('Error');
+      break;
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -65,7 +82,7 @@ function LoginForm() {
         const data = await response.json();
         console.log('Response from server:', data);
         localStorage.setItem('user', JSON.stringify(data));
-        history.push('/customer/products');
+        redirectByRoel(data.role);
         // Handle successful login, e.g. store token, redirect to the main page, etc.
       } else {
         // Handle unsuccessful login, e.g. display an error message
