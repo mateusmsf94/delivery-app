@@ -1,4 +1,5 @@
 const { SaleService } = require('../services');
+const saleService = require('../services/SaleService');
 
 const ERROR_MESSAGE = 'Internal Server Error';
 
@@ -39,5 +40,29 @@ const getSalesById = async (req, res) => {
   }
 };
 
-const saleController = { createSale, getSalesFromUser, getSalesById };
+const getSaleProductById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const data = await SaleService.getSaleProductById(id);
+
+    return res.status(data.status).json(data.message);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getSaleById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const data = await saleService.getSalesById(id);
+
+    return res.status(data.status).json(data.message);
+  } catch (error) {
+    next(error);
+  }
+};
+const saleController = {
+  createSale, getSaleProductById, getSaleById, getSalesFromUser, getSalesById };
 module.exports = saleController;

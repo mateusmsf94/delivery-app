@@ -3,9 +3,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: green;
+  /* background-color: #036B52; */
   height: 50px;
   width: 100%;
+}
+
+.pendente {
+  display: flex;
+  width: 8%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15%;
+}
+
+.preparar {
+  display: flex;
+  width: 15%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15%;
+  background-color: #2FC18C;
+}
+
+.saiu {
+  display: flex;
+  width: 15%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10%;
+  background-color: #036B52;
 }
 
 .navProduct {
@@ -19,6 +45,18 @@
 }
 
 .navPedidos {
+  display: flex;
+  background-color: #036B52;
+  width: 70%;
+  height: 100%;
+  align-items: center;
+  justify-content: left;
+  /* margin-right: ; */
+  padding-left: 20px;
+  font-weight: bold;
+}
+
+.navPedidos2 {
   display: flex;
   background-color: #036B52;
   width: 70%;
@@ -51,11 +89,32 @@
   font-weight: bold;
 }
 
+.navSeller {
+  display: flex;
+  background-color: #421981;
+  width: 15%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-left: 850px;
+  /* padding-left: 50px; */
+}
+
+.details {
+  display: flex;
+  justify-content: space-around;
+}
+
 @media screen and (max-width: 600px) {
 .navPedidos {
   justify-content: center;
   width: 50%;
   padding-left: 5px;
+}
+
+.navSeller {
+  width: 35%;
 }
 
 .navUser {
