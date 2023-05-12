@@ -1,5 +1,7 @@
 const { UserService } = require('../services');
 
+const ERROR_MESSAGE = 'Internal Server Error';
+
 const createUser = async (req, res) => {
   try {
     const { statusCode, data } = await UserService.createUser(req.body);
@@ -8,7 +10,20 @@ const createUser = async (req, res) => {
     console.error(error);
     return res
       .status(error.statusCode || 500)
-      .json({ message: error.message || 'Internal Server Error' });
+      .json({ message: error.message || ERROR_MESSAGE });
+  }
+};
+
+const createUserByAdm = async (req, res) => {
+  try {
+    const { authorization } = req.headers;
+    const { statusCode, data } = await UserService.createUserByAdm(req.body, authorization);
+    return res.status(statusCode).json(data);
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(error.statusCode || 500)
+      .json({ message: error.message || ERROR_MESSAGE });
   }
 };
 
@@ -20,10 +35,10 @@ const getSellersData = async (_req, res) => {
     console.error(error);
     return res
       .status(error.statusCode || 500)
-      .json({ message: error.message || 'Internal Server Error' });
+      .json({ message: error.message || ERROR_MESSAGE });
   }
 };
 
-const userController = { createUser, getSellersData };
+const userController = { createUser, getSellersData, createUserByAdm };
 
 module.exports = userController;

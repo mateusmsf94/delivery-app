@@ -5,5 +5,6 @@ const userController = require('../controllers/UserController'); // Fix the impo
 const userRouter = express.Router();
 
 userRouter.post('/', validateLoginFields, userController.createUser); // Fix the function name here
+userRouter.post('/admin', validateLoginFields, userController.createUserByAdm);
 
 module.exports = userRouter;

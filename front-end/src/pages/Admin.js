@@ -11,14 +11,14 @@ export default function Admin() {
 
   const minNameLength = 12;
   const minPasswordLength = 6;
-  const roles = ['Vendedor', 'Cliente', 'Administrador'];
+  const roles = ['seller', 'customer', 'administrator'];
   const [userRole, setUserRole] = useState(roles[0]);
 
   const ROUTE = 'admin_manage';
 
   function validateEmail(email) {
     setUserEmail(email);
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3,4}$/i;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       setEmailError('Please enter a valid email address');
     } else {
@@ -44,6 +44,50 @@ export default function Admin() {
     }
   };
 
+  // const resetInputs = () => {
+  //   setUserName('');
+  //   setNameError('');
+  //   setUserEmail('');
+  //   setEmailError('');
+  //   setUserPassword('');
+  //   setPasswordError('');
+  //   setUserRole(roles[0]);
+  // };
+
+  const handleSubmit = async () => {
+    if (!emailError && !passwordError && !nameError) {
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      try {
+        const response = await fetch('http://localhost:3001/register/admin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: user.token,
+          },
+          body: JSON.stringify({
+            name: userName,
+            email: userEmail,
+            password: userPassword,
+            role: userRole,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Response from server:', data);
+          // resetInputs();
+        } else {
+          const errorData = await response.json();
+          console.log(errorData);
+          setUserExist('User already exist');
+        }
+      } catch (error) {
+        console.error('Error submitting the form:', error);
+      }
+    }
+  };
+
   const validateInputs = userName && userEmail && userPassword
     && !passwordError && !emailError && !nameError;
 
@@ -51,7 +95,9 @@ export default function Admin() {
     <>
       <NavAdmin />
       <div className="w-4/5 mx-auto flex flex-wrap max-w-full justify-center">
-        <p>{nameError || emailError || passwordError}</p>
+        <p data-testid="admin_manage__element-invalid-register">
+          {nameError || emailError || passwordError}
+        </p>
         <h3 className="font-semibold mt-6 w-full ml-20%">Cadastrar novo usuário</h3>
         <label htmlFor="user-name" className="font-normal text-xs m-2 w-full">
           Nome
@@ -102,6 +148,7 @@ export default function Admin() {
           type="button"
           disabled={ !validateInputs }
           className="py-2 px-8 bg-darkgreen text-white rounded uppercase font-semibold"
+          onClick={ () => handleSubmit() }
           data-testid={ `${ROUTE}__button-register` }
         >
           CADASTRAR
