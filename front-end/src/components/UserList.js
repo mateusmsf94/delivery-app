@@ -5,9 +5,9 @@ export default function UserList({ usersList, removeUser }) {
   const ROUTE = 'admin_manage';
 
   return (
-    <div>
+    <div className="w-4/5 mx-auto mt-4">
       <h3>Lista de usuários</h3>
-      <table>
+      <table className="w-full border">
         <thead>
           <tr>
             { header.map((option, i) => (
@@ -15,31 +15,35 @@ export default function UserList({ usersList, removeUser }) {
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-center p-4 text-white font-semibold">
           {
             usersList.map(({ id, name, email, role }, i) => (
-              <tr key={ i }>
+              <tr key={ i } className="m-2 border-b-8 border-white">
                 <td
+                  className="bg-lightgreen px-1 py-1 text-black border-r-1 border-l-1"
                   data-testid={ `${ROUTE}__element-user-table-item-number-${i}` }
                 >
                   {i}
                 </td>
                 <td
+                  className="bg-lightgray text-black font-normal"
                   data-testid={ `${ROUTE}__element-user-table-name-${i}` }
                 >
                   {name}
                 </td>
                 <td
+                  className="bg-darkgreen"
                   data-testid={ `${ROUTE}__element-user-table-email-${i}` }
                 >
                   {email}
                 </td>
                 <td
+                  className="bg-purple"
                   data-testid={ `${ROUTE}__element-user-table-role-${i}` }
                 >
                   {role}
                 </td>
-                <td>
+                <td className="bg-blue">
                   <button
                     type="button"
                     data-testid={ `${ROUTE}__element-user-table-remove-${i}` }
