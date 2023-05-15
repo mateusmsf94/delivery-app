@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { loginRouter, userRouter, productRouter, saleRouter } = require('../database/routes');
+const { loginRouter, registerRouter, 
+  productRouter, saleRouter, userRouter } = require('../database/routes');
 
 const app = express();
 app.use(cors());
@@ -11,9 +12,10 @@ app.get('/coffee', (_req, res) => res.status(418).end());
 app.use(express.static('public'));
 
 app.use('/login', loginRouter);
-app.use('/register', userRouter);
+app.use('/register', registerRouter);
 app.use('/products', productRouter);
 app.use('/sales', saleRouter);
+app.use('/users', userRouter);
 
 app.use((error, _req, res, _next) => {
   if (error.status) {

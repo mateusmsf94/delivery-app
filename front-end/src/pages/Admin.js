@@ -50,7 +50,7 @@ export default function Admin() {
 
   useEffect(() => {
     async function getUserList() {
-      const url = 'http://localhost:3001/register/users';
+      const url = 'http://localhost:3001/users';
       const users = await fetchData(url);
       const data = users.filter((user) => user.role !== 'administrator');
       setUsersList(data);

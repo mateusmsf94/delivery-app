@@ -43,7 +43,7 @@ export default function Checkout() {
     }
 
     async function getSellers() {
-      setSellers(await fetchData('http://localhost:3001/products/sellers'));
+      setSellers(await fetchData('http://localhost:3001/users/sellers'));
     }
 
     getProductData();
