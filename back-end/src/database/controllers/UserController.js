@@ -50,6 +50,19 @@ const getUsers = async (_req, res) => {
   }
 };
 
-const userController = { createUser, getSellersData, createUserByAdm, getUsers };
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { authorization } = req.headers;
+    const { statusCode } = await UserService.deleteUser(id, authorization);
+    return res.status(statusCode).end();
+  } catch (error) {
+    return res
+    .status(error.statusCode || 500)
+    .json({ message: error.message || ERROR_MESSAGE });
+  }
+};
+
+const userController = { createUser, getSellersData, createUserByAdm, getUsers, deleteUser };
 
 module.exports = userController;

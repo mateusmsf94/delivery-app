@@ -48,14 +48,14 @@ export default function Admin() {
     }
   };
 
-  useEffect(() => {
-    async function getUserList() {
-      const url = 'http://localhost:3001/users';
-      const users = await fetchData(url);
-      const data = users.filter((user) => user.role !== 'administrator');
-      setUsersList(data);
-    }
+  async function getUserList() {
+    const url = 'http://localhost:3001/users';
+    const users = await fetchData(url);
+    const data = users.filter((user) => user.role !== 'administrator');
+    setUsersList(data);
+  }
 
+  useEffect(() => {
     getUserList();
   }, []);
 
@@ -90,8 +90,26 @@ export default function Admin() {
     }
   };
 
-  const removeUser = (userId) => {
-    console.log(userId);
+  const removeUser = async (userId) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    try {
+      const response = await fetch(`http://localhost:3001/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: user.token,
+        },
+      });
+
+      if (response.ok) {
+        await getUserList();
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error('Error submitting the form:', error);
+    }
   };
 
   const validateInputs = userName && userEmail && userPassword
@@ -160,7 +178,7 @@ export default function Admin() {
           CADASTRAR
         </button>
       </div>
-      <UserList usersList={ usersList } removeUSer={ removeUser } />
+      <UserList usersList={ usersList } removeUser={ removeUser } />
     </>
   );
 }

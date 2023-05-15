@@ -56,4 +56,18 @@ const getUsers = async () => {
   return { statusCode: 200, data: users };
 };
 
-module.exports = { createUser, getSellers, createUserByAdm, getUsers };
+const deleteUser = async (id, token) => {
+  validateToken(token);
+
+  const deletedUser = await User.destroy({
+    where: { [Op.or]: [{ id }] },
+  });
+
+  if (deletedUser === 1) {
+    return { statusCode: 204 };
+  } 
+  
+  return { statusCode: 404 };
+};
+
+module.exports = { createUser, getSellers, createUserByAdm, getUsers, deleteUser };
