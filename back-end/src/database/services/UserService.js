@@ -40,12 +40,20 @@ const createUserByAdm = async (user, token) => {
 };
 
 const getSellers = async () => {
-  const sellers = User.findAll({
+  const sellers = await User.findAll({
     where: { [Op.or]: [{ role: 'seller' }] },
     attributes: ['id', 'name'],
   });
 
-  return sellers;
+  return { statusCode: 200, data: sellers };
 };
 
-module.exports = { createUser, getSellers, createUserByAdm };
+const getUsers = async () => {
+  const users = await User.findAll({
+    attributes: ['id', 'name', 'email', 'role'],
+  });
+
+  return { statusCode: 200, data: users };
+};
+
+module.exports = { createUser, getSellers, createUserByAdm, getUsers };

@@ -43,7 +43,7 @@ export default function UserList({ usersList, removeUser }) {
                   <button
                     type="button"
                     data-testid={ `${ROUTE}__element-user-table-remove-${i}` }
-                    onClick={ removeUser(id) }
+                    onClick={ () => removeUser(id) }
                   >
                     Excluir
                   </button>

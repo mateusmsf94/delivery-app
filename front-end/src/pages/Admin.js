@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import NavAdmin from '../components/NavAdmin';
 import UserList from '../components/UserList';
 
+import fetchData from '../utils/requestAPI';
+
 export default function Admin() {
   const [userName, setUserName] = useState('');
   const [nameError, setNameError] = useState('');
@@ -46,12 +48,14 @@ export default function Admin() {
     }
   };
 
-  async function getUserList() {
-    const url = '';
-    setUsersList(await fetchData(url));
-  }
-
   useEffect(() => {
+    async function getUserList() {
+      const url = 'http://localhost:3001/register/users';
+      const users = await fetchData(url);
+      const data = users.filter((user) => user.role !== 'administrator');
+      setUsersList(data);
+    }
+
     getUserList();
   }, []);
 

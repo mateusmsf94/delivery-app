@@ -29,8 +29,8 @@ const createUserByAdm = async (req, res) => {
 
 const getSellersData = async (_req, res) => {
   try {
-    const data = await UserService.getSellers();
-    return res.status(200).json(data); 
+    const { statusCode, data } = await UserService.getSellers();
+    return res.status(statusCode).json(data); 
   } catch (error) {
     console.error(error);
     return res
@@ -39,6 +39,17 @@ const getSellersData = async (_req, res) => {
   }
 };
 
-const userController = { createUser, getSellersData, createUserByAdm };
+const getUsers = async (_req, res) => {
+  try {
+    const { statusCode, data } = await UserService.getUsers();
+    return res.status(statusCode).json(data);
+  } catch (error) {
+    return res
+    .status(error.statusCode || 500)
+    .json({ message: error.message || ERROR_MESSAGE });
+  }
+};
+
+const userController = { createUser, getSellersData, createUserByAdm, getUsers };
 
 module.exports = userController;
