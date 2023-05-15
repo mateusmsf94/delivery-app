@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-// import { useEffect } from 'react';
 
 export default function CheckoutTable({ props }) {
   const { totalPrice, qty, removeItem, products } = props;
@@ -25,7 +24,6 @@ export default function CheckoutTable({ props }) {
         </thead>
         <tbody className="text-center p-4 text-white font-semibold">
           { (products).map(({ id, name, price }, index) => (
-            // { border-b-8 border-white }
             <tr key={ index } className="m-2 border-b-8 border-white">
               <td
                 className={ `bg-lightgreen px-1 py-1 text-black border-r-1
