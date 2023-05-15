@@ -21,6 +21,10 @@ export default function NavCustomer() {
         Produtos
       </Link>
       <p
+        className="navPedidos2"
+        data-testid="customer_products__element-navbar-link-orders"
+      />
+      <p
         data-testid="customer_products__element-navbar-user-full-name"
         className="navUser text-center text-black-950"
       >
