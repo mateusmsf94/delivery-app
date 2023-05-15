@@ -24,7 +24,7 @@ export default function SellerCheckout() {
     }
   };
 
-  const prepareOrder = async () => {
+  const updateStatusOrder = async (status) => {
     try {
       const id = `${pathName.charAt(pathName.length - 1)}`;
       const response = await fetch('http://localhost:3001/sales/', {
@@ -32,37 +32,13 @@ export default function SellerCheckout() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, status: 'Preparando' }),
+        body: JSON.stringify({ id, status }),
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log('Response from server:', data);
         getProductData();
-      } else {
-        const errorData = await response.json();
-        console.error(errorData);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  const outForDelivery = async () => {
-    try {
-      const id = `${pathName.charAt(pathName.length - 1)}`;
-      const response = await fetch('http://localhost:3001/sales/', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id, status: 'Em Trânsito' }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        getProductData();
-        console.log('Response from server:', data);
       } else {
         const errorData = await response.json();
         console.error(errorData);
@@ -116,20 +92,20 @@ export default function SellerCheckout() {
           { dataResult.status }
         </p>
         <button
-          className="font-bold text-gray-800 mb-2 preparar"
+          className="font-bold text-gray-800 mb-2 preparar button"
           type="button"
           data-testid="seller_order_details__button-preparing-check"
           disabled={ dataResult.status !== 'Pendente' }
-          onClick={ () => prepareOrder() }
+          onClick={ () => updateStatusOrder('Preparando') }
         >
           PREPARAR PEDIDO
         </button>
         <button
-          className="font-bold text-gray-800 mb-2 saiu"
+          className="font-bold text-gray-800 mb-2 saiu button"
           type="button"
           data-testid="seller_order_details__button-dispatch-check"
           disabled={ dataResult.status !== 'Preparando' }
-          onClick={ () => outForDelivery() }
+          onClick={ () => updateStatusOrder('Em Trânsito') }
         >
           SAIU PARA ENTREGA
         </button>
