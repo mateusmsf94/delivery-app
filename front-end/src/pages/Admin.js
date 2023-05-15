@@ -44,16 +44,6 @@ export default function Admin() {
     }
   };
 
-  // const resetInputs = () => {
-  //   setUserName('');
-  //   setNameError('');
-  //   setUserEmail('');
-  //   setEmailError('');
-  //   setUserPassword('');
-  //   setPasswordError('');
-  //   setUserRole(roles[0]);
-  // };
-
   const handleSubmit = async () => {
     if (!emailError && !passwordError && !nameError) {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -76,11 +66,9 @@ export default function Admin() {
         if (response.ok) {
           const data = await response.json();
           console.log('Response from server:', data);
-          // resetInputs();
         } else {
           const errorData = await response.json();
           console.log(errorData);
-          setUserExist('User already exist');
         }
       } catch (error) {
         console.error('Error submitting the form:', error);

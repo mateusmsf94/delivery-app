@@ -17,17 +17,17 @@ export default function NavAdmin() {
       >
         GERENCIAR USUÁRIOS
       </p>
-      <div>
+      <div className="flex items-center justify-center bg-purple ">
         <p
           data-testid="customer_products__element-navbar-user-full-name"
-          className="bg-purple px-2"
+          className="px-4 text-white"
         >
           { user.name }
         </p>
-        <Link to="/login">
+        <Link to="/login" className="h-full">
           <button
             type="button"
-            className="h-full bg-blue px-6 text-white"
+            className="h-full bg-blue px-6 text-white h-full font-semibold"
             data-testid="customer_products__element-navbar-link-logout"
             onClick={ () => localStorage.removeItem('user') }
           >
