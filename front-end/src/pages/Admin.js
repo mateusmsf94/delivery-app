@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavAdmin from '../components/NavAdmin';
+import UserList from '../components/UserList';
 
 export default function Admin() {
   const [userName, setUserName] = useState('');
@@ -8,6 +9,7 @@ export default function Admin() {
   const [emailError, setEmailError] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [usersList, setUsersList] = useState([]);
 
   const minNameLength = 12;
   const minPasswordLength = 6;
@@ -44,6 +46,15 @@ export default function Admin() {
     }
   };
 
+  async function getUserList() {
+    const url = '';
+    setUsersList(await fetchData(url));
+  }
+
+  useEffect(() => {
+    getUserList();
+  }, []);
+
   const handleSubmit = async () => {
     if (!emailError && !passwordError && !nameError) {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -64,8 +75,7 @@ export default function Admin() {
         });
 
         if (response.ok) {
-          const data = await response.json();
-          console.log('Response from server:', data);
+          await getUserList();
         } else {
           const errorData = await response.json();
           console.log(errorData);
@@ -74,6 +84,10 @@ export default function Admin() {
         console.error('Error submitting the form:', error);
       }
     }
+  };
+
+  const removeUser = (userId) => {
+    console.log(userId);
   };
 
   const validateInputs = userName && userEmail && userPassword
@@ -142,6 +156,7 @@ export default function Admin() {
           CADASTRAR
         </button>
       </div>
+      <UserList usersList={ usersList } removeUSer={ removeUser } />
     </>
   );
 }
