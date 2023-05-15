@@ -50,6 +50,17 @@ const getSaleProductById = async (id) => {
   return { status: 200, message: data };
 };
 
+const updateStatus = async ({ id, status }) => {
+  const response = await Sale.update(
+     { status },
+     { where: { id } },
+  );
+
+  if (!response) throw Object({ status: 404, message: 'Algum Erro ocorreu' });
+  
+  return { status: 200, message: 'Status do pedido atualizado com sucesso' };
+};
+
 const saleService = {
-  createSale, getSaleProductById, getSalesById, getSalesFromUser };
+  createSale, getSaleProductById, getSalesById, getSalesFromUser, updateStatus };
 module.exports = saleService;

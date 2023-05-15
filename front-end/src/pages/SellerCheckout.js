@@ -8,7 +8,6 @@ export default function SellerCheckout() {
 
   const history = useHistory();
 
-  // const url = 'http://localhost:3001/sales/1';
   const pathName = history.location.pathname;
   const realURL = `http://localhost:3001/sales/${pathName.charAt(pathName.length - 1)}`;
 
@@ -17,6 +16,61 @@ export default function SellerCheckout() {
   const header = [
     'Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total',
   ];
+
+  const getProductData = async () => {
+    const data = await fetchData(realURL);
+    if (data !== null && data !== undefined) {
+      setDataResult(data);
+    }
+  };
+
+  const prepareOrder = async () => {
+    try {
+      const id = `${pathName.charAt(pathName.length - 1)}`;
+      const response = await fetch('http://localhost:3001/sales/', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, status: 'Preparando' }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Response from server:', data);
+        getProductData();
+      } else {
+        const errorData = await response.json();
+        console.error(errorData);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const outForDelivery = async () => {
+    try {
+      const id = `${pathName.charAt(pathName.length - 1)}`;
+      const response = await fetch('http://localhost:3001/sales/', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, status: 'Em Trânsito' }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        getProductData();
+        console.log('Response from server:', data);
+      } else {
+        const errorData = await response.json();
+        console.error(errorData);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const formatDate = () => {
     const date = new Date(dataResult.saleDate);
@@ -31,18 +85,12 @@ export default function SellerCheckout() {
   };
 
   useEffect(() => {
-    const getProductData = async () => {
-      const data = await fetchData(realURL);
-      if (data !== null && data !== undefined) {
-        setDataResult(data);
-      }
-    };
-
     getProductData();
   }, []);
 
-  console.log(pathName.charAt(pathName.length - 1));
-  console.log('URL', realURL);
+  // useEffect(() => {
+  //   updateStatus();
+  // });
 
   return (
     <div className="w-4/5 mx-auto mt-4">
@@ -71,6 +119,8 @@ export default function SellerCheckout() {
           className="font-bold text-gray-800 mb-2 preparar"
           type="button"
           data-testid="seller_order_details__button-preparing-check"
+          disabled={ dataResult.status !== 'Pendente' }
+          onClick={ () => prepareOrder() }
         >
           PREPARAR PEDIDO
         </button>
@@ -78,6 +128,8 @@ export default function SellerCheckout() {
           className="font-bold text-gray-800 mb-2 saiu"
           type="button"
           data-testid="seller_order_details__button-dispatch-check"
+          disabled={ dataResult.status !== 'Preparando' }
+          onClick={ () => outForDelivery() }
         >
           SAIU PARA ENTREGA
         </button>
