@@ -64,10 +64,6 @@ export default function SellerCheckout() {
     getProductData();
   }, []);
 
-  // useEffect(() => {
-  //   updateStatus();
-  // });
-
   return (
     <div className="w-4/5 mx-auto mt-4">
       <NavSeller />
@@ -92,7 +88,9 @@ export default function SellerCheckout() {
           { dataResult.status }
         </p>
         <button
-          className="font-bold text-gray-800 mb-2 preparar button"
+        // colocar className "button" para efeito de mouseOver
+          className={ `font-bold text-gray-800 mb-2 saiu
+          ${dataResult.status !== 'Pendente' ? 'disabled' : ''}` }
           type="button"
           data-testid="seller_order_details__button-preparing-check"
           disabled={ dataResult.status !== 'Pendente' }
@@ -101,7 +99,9 @@ export default function SellerCheckout() {
           PREPARAR PEDIDO
         </button>
         <button
-          className="font-bold text-gray-800 mb-2 saiu button"
+        // colocar className "button" para efeito de mouseOver
+          className={ `font-bold text-gray-800 mb-2 preparar
+          ${dataResult.status !== 'Preparando' ? 'disabled' : ''}` }
           type="button"
           data-testid="seller_order_details__button-dispatch-check"
           disabled={ dataResult.status !== 'Preparando' }

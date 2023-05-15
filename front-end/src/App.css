@@ -25,6 +25,15 @@
   background-color: #2FC18C;
 }
 
+.saiu {
+  display: flex;
+  width: 15%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10%;
+  background-color: #036B52;
+}
+
 .button {
   transition: background-color 0.5s ease;
 }
@@ -35,16 +44,11 @@
   transition: background-color 1s ease;
 }
 
-
-
-.saiu {
-  display: flex;
-  width: 15%;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10%;
-  background-color: #036B52;
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
+
 
 .navProduct {
   display: flex;
