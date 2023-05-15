@@ -24,6 +24,24 @@ export default function SellerCheckout() {
     }
   };
 
+  const className = (status) => {
+    let statusClass = '';
+    switch (status) {
+    case 'Preparando':
+      statusClass = 'bg-blue';
+      break;
+    case 'Em Trânsito':
+      statusClass = 'bg-red-500';
+      break;
+    case 'Pendente':
+      statusClass = 'bg-yellow-500';
+      break;
+    default:
+    }
+
+    return statusClass;
+  };
+
   const updateStatusOrder = async (status) => {
     try {
       const id = `${pathName.charAt(pathName.length - 1)}`;
@@ -82,7 +100,8 @@ export default function SellerCheckout() {
           { formatDate()}
         </p>
         <p
-          className="font-bold text-gray-800 mb-2 bg-yellow-500 pendente"
+          className={ `font-bold text-gray-800 mb-2 pendente
+          ${className(dataResult.status)}` }
           data-testid="seller_order_details__element-order-details-label-delivery-status"
         >
           { dataResult.status }
