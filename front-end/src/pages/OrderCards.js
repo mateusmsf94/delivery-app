@@ -29,27 +29,26 @@ export default function OrderCards() {
       <NavSeller />
       <div>
         { dataResult.map((ele, index) => (
-          <div key={ index }>
-            <Link
-              to={ `${pathName}/${ele.id}` }
-            >
-              <p data-testid={ `seller_orders__element-order-id-${ele.id}` }>
-                {`PEDIDO ${ele.id?.toString().padStart(four, '0')}`}
-              </p>
-              <p data-testid={ `seller_orders__element-delivery-status-${ele.id}` }>
-                {ele.status}
-              </p>
-              <p data-testid={ `seller_orders__element-order-date-${ele.id}` }>
-                { formateDate(ele.saleDate)}
-              </p>
-              <p data-testid={ `seller_orders__element-card-price-${ele.id}` }>
-                { ele.totalPrice }
-              </p>
-              <p data-testid={ `seller_orders__element-card-address-${ele.id}` }>
-                { `${ele.deliveryAddress}, ${ele.deliveryNumber}` }
-              </p>
-            </Link>
-          </div>
+          <Link
+            key={ index }
+            to={ `/seller/orders/${ele.id}` }
+          >
+            <p data-testid={ `seller_orders__element-order-id-${ele.id}` }>
+              {`PEDIDO ${ele.id?.toString().padStart(four, '0')}`}
+            </p>
+            <p data-testid={ `seller_orders__element-delivery-status-${ele.id}` }>
+              {ele.status}
+            </p>
+            <p data-testid={ `seller_orders__element-order-date-${ele.id}` }>
+              { formateDate(ele.saleDate)}
+            </p>
+            <p data-testid={ `seller_orders__element-card-price-${ele.id}` }>
+              { ele.totalPrice }
+            </p>
+            <p data-testid={ `seller_orders__element-card-address-${ele.id}` }>
+              { `${ele.deliveryAddress}, ${ele.deliveryNumber}` }
+            </p>
+          </Link>
         ))}
       </div>
     </>

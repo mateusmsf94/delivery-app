@@ -185,12 +185,11 @@ export default function SellerCheckout() {
           </tbody>
         </table>
         <p
+          data-testid="seller_order_details__element-order-total-price"
           className="w-full text-right pr-4 font-bold text-white bg-darkgreen"
           colSpan="6"
         >
-          {'TOTAL: R$ '}
           { dataResult.totalPrice }
-
         </p>
       </div>
     </div>
