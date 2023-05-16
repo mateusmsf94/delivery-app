@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NavSeller from '../components/NavSeller';
 import fetchData from '../utils/requestAPI';
 import formateDate from '../utils/formateDate';
@@ -11,8 +11,8 @@ export default function OrderCards() {
 
   const four = 4;
 
-  const history = useHistory();
-  const pathName = history.location.pathname;
+  // const history = useHistory();
+  // const pathName = history.location.pathname;
 
   const getProductData = async () => {
     const data = await fetchData(realURL);
