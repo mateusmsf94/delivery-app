@@ -94,7 +94,7 @@ export default function SellerCheckout() {
           { `PEDIDO ${dataResult.id?.toString().padStart(four, '0')}`}
         </p>
         <p
-          className="font-bold text-gray-800 mb-2"
+          className="bg-neutral-400 bg-opacity-30 rounded px-2 data"
           data-testid="seller_order_details__element-order-details-label-order-date"
         >
           { formatDate()}
@@ -143,7 +143,7 @@ export default function SellerCheckout() {
               <tr key={ index } className="text-center p-4 text-white font-semibold">
                 <td
                   className={ `bg-lightgreen px-1 py-1 text-black border-r-1
-                  border-l-1 rounded-tl-md rounded-bl-md` }
+                  border-l-1` }
                   data-testid={
                     `seller_order_details__element-order-table-item-number-${index}`
                   }

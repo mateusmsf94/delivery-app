@@ -58,7 +58,7 @@ const updateStatus = async ({ id, status }) => {
 
   if (!response) throw Object({ status: 404, message: 'Algum Erro ocorreu' });
   
-  return { status: 200, message: 'Status do pedido atualizado com sucesso' };
+  return { status: 200, message: `Status do pedido atualizado para "${status}" com sucesso` };
 };
 
 const saleService = {
