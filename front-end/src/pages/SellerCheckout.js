@@ -189,7 +189,8 @@ export default function SellerCheckout() {
           className="w-full text-right pr-4 font-bold text-white bg-darkgreen"
           colSpan="6"
         >
-          { dataResult.totalPrice }
+          {/* { `${dataResult.totalPrice.replace('.', ',')}` } */}
+          { dataResult.totalPrice ? dataResult.totalPrice.replace('.', ',') : 0}
         </p>
       </div>
     </div>
