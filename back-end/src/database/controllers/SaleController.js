@@ -74,6 +74,22 @@ const updateStatus = async (req, res, next) => {
   }
 };
 
+const getAllOrders = async (_req, res, next) => {
+  try {
+    const data = await saleService.getAllOrders();
+
+    return res.status(data.status).json(data.message);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const saleController = {
-  createSale, getSaleProductById, getSaleById, getSalesFromUser, getSalesById, updateStatus };
+  createSale,
+  getSaleProductById,
+  getSaleById,
+  getSalesFromUser,
+  getSalesById,
+  updateStatus,
+  getAllOrders };
 module.exports = saleController;

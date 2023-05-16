@@ -81,7 +81,6 @@ export default function SellerCheckout() {
   useEffect(() => {
     getProductData();
   }, []);
-
   return (
     <div className="w-4/5 mx-auto mt-4">
       <NavSeller />

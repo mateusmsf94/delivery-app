@@ -61,6 +61,17 @@ const updateStatus = async ({ id, status }) => {
   return { status: 200, message: `Status do pedido atualizado para "${status}" com sucesso` };
 };
 
+const getAllOrders = async () => {
+  const data = await Sale.findAll({
+    include: [
+      { model: User, as: 'seller', attributes: ['id', 'name'] },
+      { model: Product, as: 'product', attributes: ['id', 'name', 'price'] },
+    ],
+  }); 
+
+  return { status: 200, message: data };
+};
+
 const saleService = {
-  createSale, getSaleProductById, getSalesById, getSalesFromUser, updateStatus };
+  createSale, getSaleProductById, getSalesById, getSalesFromUser, updateStatus, getAllOrders };
 module.exports = saleService;
