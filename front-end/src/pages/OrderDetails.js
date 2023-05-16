@@ -12,18 +12,44 @@ export default function OrderDetails() {
   const history = useHistory();
   const orderFix = 4;
 
-  useEffect(() => {
-    async function getOrderData() {
+  async function getOrderData() {
+    const { location: { pathname } } = history;
+    const path = pathname.split('/');
+    const orderId = path[path.length - 1];
+    const url = `http://localhost:3001/sales/${orderId}`;
+    const data = await fetchData(url);
+    setOrderData(data);
+  }
+
+  const updateStatusOrder = async (status) => {
+    try {
       const { location: { pathname } } = history;
       const path = pathname.split('/');
-      const orderId = path[path.length - 1];
-      const url = `http://localhost:3001/sales/${orderId}`;
-      const data = await fetchData(url);
-      setOrderData(data);
-    }
+      const id = path[path.length - 1];
+      const response = await fetch('http://localhost:3001/sales/', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, status }),
+      });
 
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Response from server:', data);
+        getOrderData();
+      } else {
+        const errorData = await response.json();
+        console.error(errorData);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  useEffect(() => {
     getOrderData();
-  }, [history]);
+  }, []);
 
   return (
     <>
@@ -62,7 +88,7 @@ export default function OrderDetails() {
             className="bg-darkgreen rounded px-1 text-white text-sm mr-2"
             data-testid={ `${ROUTE}__button-delivery-check` }
             disabled={ delivery.includes(orderData.status) }
-            onClick={ () => console.log('oi') }
+            onClick={ () => updateStatusOrder('Entregue') }
           >
             MARCAR COMO ENTREGUE
           </button>

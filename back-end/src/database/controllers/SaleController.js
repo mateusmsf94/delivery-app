@@ -63,6 +63,17 @@ const getSaleById = async (req, res, next) => {
     next(error);
   }
 };
+
+const updateStatus = async (req, res, next) => {
+  try {
+    const data = await saleService.updateStatus(req.body);
+
+    res.status(data.status).json(data.message);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const saleController = {
-  createSale, getSaleProductById, getSaleById, getSalesFromUser, getSalesById };
+  createSale, getSaleProductById, getSaleById, getSalesFromUser, getSalesById, updateStatus };
 module.exports = saleController;

@@ -10,7 +10,8 @@
 
 .pendente {
   display: flex;
-  width: 8%;
+  width: 15%;
+  /* font-size: x-large; */
   align-items: center;
   justify-content: center;
   border-radius: 15%;
@@ -33,6 +34,22 @@
   border-radius: 10%;
   background-color: #036B52;
 }
+
+.button {
+  transition: background-color 0.5s ease;
+}
+
+.button:hover {
+  background-color: #e2e8f0;
+  opacity: 0.75;
+  transition: background-color 1s ease;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 
 .navProduct {
   display: flex;
@@ -104,6 +121,10 @@
 .details {
   display: flex;
   justify-content: space-around;
+}
+
+.data {
+  height: 50%;
 }
 
 @media screen and (max-width: 600px) {
