@@ -48,7 +48,7 @@ export default function Orders() {
               <div
                 data-testid={ `customer_orders__element-delivery-status-${order.id}` }
                 className={ `m-2 h-20 rounded w-3/5 flex justify-center items-center
-                font-semibold uppercase text-xl
+                font-semibold text-xl
                 ${order.status === 'Entregue' ? 'bg-darkgreen' : ''}
                 ${order.status === 'Pendente' ? 'bg-yellow-300' : ''}
                 ${order.status === 'Preparando' ? 'bg-lime-400' : ''}

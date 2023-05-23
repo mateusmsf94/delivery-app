@@ -6,13 +6,8 @@ import formateDate from '../utils/formateDate';
 
 export default function OrderCards() {
   const [dataResult, setDataResult] = useState([]);
-
   const realURL = 'http://localhost:3001/sales/orders';
-
   const four = 4;
-
-  // const history = useHistory();
-  // const pathName = history.location.pathname;
 
   const getProductData = async () => {
     const data = await fetchData(realURL);
@@ -24,6 +19,7 @@ export default function OrderCards() {
   useEffect(() => {
     getProductData();
   }, []);
+
   return (
     <>
       <NavSeller />
@@ -49,7 +45,7 @@ export default function OrderCards() {
             <p
               data-testid={ `seller_orders__element-delivery-status-${ele.id}` }
               className={ `m-2 h-20 rounded flex w-1/3 justify-center
-                items-center font-semibold uppercase text-xl
+                items-center font-semibold text-xl
                 ${ele.status === 'Entregue' ? 'bg-darkgreen' : ''}
                 ${ele.status === 'Pendente' ? 'bg-yellow-300' : ''}
                 ${ele.status === 'Preparando' ? 'bg-lime-400' : ''}
