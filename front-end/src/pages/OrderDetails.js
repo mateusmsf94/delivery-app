@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import NavCustomer from '../components/NavCustomer';
 import fetchData from '../utils/requestAPI';
@@ -9,29 +9,29 @@ export default function OrderDetails() {
   const delivery = ['Pendente', 'Preparando', 'Entregue'];
   const ROUTE = 'customer_order_details';
   const [orderData, setOrderData] = useState({});
+  const [orderId, setOrderId] = useState(0);
   const history = useHistory();
   const orderFix = 4;
 
-  async function getOrderData() {
+  const getOrderData = useCallback(async () => {
     const { location: { pathname } } = history;
     const path = pathname.split('/');
-    const orderId = path[path.length - 1];
-    const url = `http://localhost:3001/sales/${orderId}`;
+    const id = path[path.length - 1];
+    setOrderId(id);
+
+    const url = `http://localhost:3001/sales/${id}`;
     const data = await fetchData(url);
     setOrderData(data);
-  }
+  }, [history]);
 
   const updateStatusOrder = async (status) => {
     try {
-      const { location: { pathname } } = history;
-      const path = pathname.split('/');
-      const id = path[path.length - 1];
       const response = await fetch('http://localhost:3001/sales/', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, status }),
+        body: JSON.stringify({ id: orderId, status }),
       });
 
       if (response.ok) {
@@ -49,7 +49,7 @@ export default function OrderDetails() {
 
   useEffect(() => {
     getOrderData();
-  }, []);
+  }, [getOrderData]);
 
   return (
     <>

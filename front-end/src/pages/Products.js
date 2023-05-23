@@ -40,7 +40,7 @@ export default function Products() {
   }
 
   function validateInput(id, value) {
-    if (value > 0) { setQty({ ...qty, [id]: value }); }
+    if (value >= 0) { setQty({ ...qty, [id]: value }); }
   }
 
   return (
