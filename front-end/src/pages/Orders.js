@@ -27,28 +27,46 @@ export default function Orders() {
   return (
     <>
       <NavCustomer />
-      <main className=" w-4/5 grid grid-cols-2 mx-auto mt-2">
+      <main className=" w-4/5 mx-auto mt-6">
         {!orders ? null
           : orders.map((order) => (
             <Link
               key={ order.id }
               to={ `/customer/orders/${order.id}` }
-              className="border shadow-md rounded m-2"
+              className={ `w-4/5 mx-auto border shadow-md rounded m-2 
+                flex bg-lightgray h-24 items-center` }
             >
-              <p>
+              <p className="bg-white h-full w-1/4 text-center pt-5 font-light rounded-l">
                 Pedido
-                <span data-testid={ `customer_orders__element-order-id-${order.id}` }>
+                <span
+                  data-testid={ `customer_orders__element-order-id-${order.id}` }
+                  className="block text-center font-normal"
+                >
                   { (order.id).toString().padStart(orderFix, '0') }
                 </span>
               </p>
-              <div data-testid={ `customer_orders__element-delivery-status-${order.id}` }>
+              <div
+                data-testid={ `customer_orders__element-delivery-status-${order.id}` }
+                className={ `m-2 h-20 rounded w-3/5 flex justify-center items-center
+                font-semibold uppercase text-xl
+                ${order.status === 'Entregue' ? 'bg-darkgreen' : ''}
+                ${order.status === 'Pendente' ? 'bg-yellow-300' : ''}
+                ${order.status === 'Preparando' ? 'bg-lime-400' : ''}
+                ${order.status === 'Em Trânsito' ? 'bg-blue' : ''}` }
+              >
                 { order.status }
               </div>
-              <div>
-                <p data-testid={ `customer_orders__element-order-date-${order.id}` }>
+              <div className="flex-wrap w-2/5 mr-2 font-semibold text-xl">
+                <p
+                  data-testid={ `customer_orders__element-order-date-${order.id}` }
+                  className="bg-white mb-2 h-9 rounded flex justify-center items-center"
+                >
                   { formateDate(order.saleDate) }
                 </p>
-                <p data-testid={ `customer_orders__element-card-price-${order.id}` }>
+                <p
+                  data-testid={ `customer_orders__element-card-price-${order.id}` }
+                  className="bg-white h-9 rounded flex justify-center items-center"
+                >
                   {'R$ '}
                   <span>
                     { (order.totalPrice).toString().replace('.', ',') }
