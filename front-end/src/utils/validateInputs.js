@@ -10,7 +10,7 @@ const validateEmail = (email) => {
 };
 
 const validatePassword = (password) => {
-  const minPasswordLength = 5;
+  const minPasswordLength = 6;
 
   if (!password) return '';
   if (password.length < minPasswordLength) {
@@ -21,7 +21,7 @@ const validatePassword = (password) => {
 };
 
 const validateName = (name) => {
-  const minNameLength = 11;
+  const minNameLength = 12;
   if (!name) return '';
   if (name.length < minNameLength) {
     return 'Name must be at least 12 characters';
