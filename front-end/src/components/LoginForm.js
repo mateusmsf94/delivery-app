@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AuthHeader from './AuthHeader';
 import InputField from './InputField';
@@ -12,33 +12,37 @@ function LoginForm() {
   const minPasswordLength = 5;
   const history = useHistory();
 
-  const validateEmail = () => {
-    // Regular expression to check for a valid email format
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    if (!emailRegex.test(email)) {
-      setEmailError('Please enter a valid email address');
-    } else {
-      setEmailError('');
-    }
-  };
+  useEffect(() => {
+    const validateEmail = () => {
+      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
-  const validatePassword = () => {
-    if (password.length < minPasswordLength) {
-      setPasswordError('Password must be at least 6 characters');
-    } else {
-      setPasswordError('');
-    }
-  };
+      if (email === '') { return setEmailError(''); }
+      if (!emailRegex.test(email)) {
+        return setEmailError('Please enter a valid email address');
+      }
+
+      return setEmailError('');
+    };
+
+    const validatePassword = () => {
+      if (password === '') { return setPasswordError(''); }
+      if (password.length < minPasswordLength) {
+        setPasswordError('Password must be at least 6 characters');
+      }
+
+      return setPasswordError('');
+    };
+
+    validateEmail();
+    validatePassword();
+  }, [email, password]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    validateEmail();
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    console.log(password.length);
-    validatePassword();
   };
 
   const redirectToRegister = () => {
