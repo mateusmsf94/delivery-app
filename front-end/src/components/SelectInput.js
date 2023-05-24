@@ -12,7 +12,7 @@ function SelectInput({ sellers, value, handleChange }) {
         onChange={ handleChange }
         value={ value }
       >
-        <option value="">Select...</option>
+        <option value="">Vendedor</option>
         {sellers.map((seller) => (
           <option key={ seller.id } value={ seller.id }>
             {seller.name}

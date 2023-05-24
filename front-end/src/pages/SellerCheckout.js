@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
+import formatDate from '../utils/formatDate';
 import fetchData from '../utils/requestAPI';
 import NavSeller from '../components/NavSeller';
 
@@ -17,12 +18,12 @@ export default function SellerCheckout() {
     'Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total',
   ];
 
-  const getProductData = async () => {
+  const getProductData = useCallback(async () => {
     const data = await fetchData(realURL);
     if (data !== null && data !== undefined) {
       setDataResult(data);
     }
-  };
+  }, [realURL]);
 
   const className = (status) => {
     let statusClass = '';
@@ -66,26 +67,15 @@ export default function SellerCheckout() {
     }
   };
 
-  const formatDate = () => {
-    const date = new Date(dataResult.saleDate);
-
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString();
-
-    const validDate = `${day}-${month}-${year}`;
-
-    return validDate.replace(/-/g, '/');
-  };
-
   useEffect(() => {
     getProductData();
-  }, []);
+  }, [getProductData]);
+
   return (
-    <div className="w-4/5 mx-auto mt-4">
+    <>
       <NavSeller />
-      <h3 className="font-semibold">Detalhe do Pedido</h3>
-      <div className="details">
+      <div className="details w-4/5 mx-auto mt-4 flex-wrap items-center">
+        <h3 className="font-semibold w-full">Detalhe do Pedido</h3>
         <p
           className="font-bold text-gray-800 mb-2"
           data-testid="seller_order_details__element-order-details-label-order-id"
@@ -96,7 +86,7 @@ export default function SellerCheckout() {
           className="bg-neutral-400 bg-opacity-30 rounded px-2 data"
           data-testid="seller_order_details__element-order-details-label-order-date"
         >
-          { formatDate()}
+          { formatDate(dataResult.saleDate)}
         </p>
         <p
           className={ `font-bold text-gray-800 mb-2 pendente
@@ -128,7 +118,7 @@ export default function SellerCheckout() {
           SAIU PARA ENTREGA
         </button>
       </div>
-      <div>
+      <div className="w-4/5 mx-auto">
         <table className="w-full border">
           <thead>
             <tr>
@@ -177,7 +167,10 @@ export default function SellerCheckout() {
                       `seller_order_details__element-order-table-sub-total-${index}`
                     }
                   >
-                    { (ele.price * ele.SaleProduct.quantity).toFixed(2) }
+                    {
+                      (ele.price * ele.SaleProduct.quantity)
+                        .toFixed(2).replace('.', ',')
+                    }
                   </span>
                 </td>
               </tr>
@@ -185,14 +178,15 @@ export default function SellerCheckout() {
           </tbody>
         </table>
         <p
-          data-testid="seller_order_details__element-order-total-price"
           className="w-full text-right pr-4 font-bold text-white bg-darkgreen"
           colSpan="6"
         >
-          {/* { `${dataResult.totalPrice.replace('.', ',')}` } */}
-          { dataResult.totalPrice ? dataResult.totalPrice.replace('.', ',') : 0}
+          {'R$ '}
+          <span data-testid="seller_order_details__element-order-total-price">
+            { dataResult.totalPrice ? dataResult.totalPrice.replace('.', ',') : 0}
+          </span>
         </p>
       </div>
-    </div>
+    </>
   );
 }

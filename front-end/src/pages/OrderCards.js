@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavSeller from '../components/NavSeller';
 import fetchData from '../utils/requestAPI';
-import formateDate from '../utils/formateDate';
+import formatDate from '../utils/formatDate';
 
 export default function OrderCards() {
   const [dataResult, setDataResult] = useState([]);
@@ -58,7 +58,7 @@ export default function OrderCards() {
                 data-testid={ `seller_orders__element-order-date-${ele.id}` }
                 className="bg-white mb-2 h-9 rounded flex justify-center items-center"
               >
-                { formateDate(ele.saleDate)}
+                { formatDate(ele.saleDate)}
               </p>
               <p
                 className="bg-white h-9 rounded flex justify-center items-center"

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import NavCustomer from '../components/NavCustomer';
 import fetchData from '../utils/requestAPI';
-import formateDate from '../utils/formateDate';
+import formatDate from '../utils/formatDate';
 
 export default function OrderDetails() {
   const header = ['Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total'];
@@ -75,7 +75,7 @@ export default function OrderDetails() {
             data-testid={ `${ROUTE}__element-order-details-label-order-date` }
             className="bg-neutral-500 bg-opacity-30 rounded px-2"
           >
-            { formateDate(orderData.saleDate) }
+            { formatDate(orderData.saleDate) }
           </p>
           <p
             data-testid={ `${ROUTE}__element-order-details-label-delivery-status` }
