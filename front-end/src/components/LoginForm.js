@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { validateEmail, validatePassword } from '../utils/validateInputs';
 import AuthHeader from './AuthHeader';
 import InputField from './InputField';
 
@@ -9,32 +10,11 @@ function LoginForm() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [emailNotFound, setEmailNotFound] = useState('');
-  const minPasswordLength = 5;
   const history = useHistory();
 
   useEffect(() => {
-    const validateEmail = () => {
-      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-
-      if (email === '') { return setEmailError(''); }
-      if (!emailRegex.test(email)) {
-        return setEmailError('Please enter a valid email address');
-      }
-
-      return setEmailError('');
-    };
-
-    const validatePassword = () => {
-      if (password === '') { return setPasswordError(''); }
-      if (password.length < minPasswordLength) {
-        setPasswordError('Password must be at least 6 characters');
-      }
-
-      return setPasswordError('');
-    };
-
-    validateEmail();
-    validatePassword();
+    setEmailError(validateEmail(email));
+    setPasswordError(validatePassword(password));
   }, [email, password]);
 
   const handleEmailChange = (e) => {

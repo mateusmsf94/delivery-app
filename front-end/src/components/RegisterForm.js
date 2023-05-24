@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AuthHeader from './AuthHeader';
 import InputField from './InputField';
+import { validateEmail, validatePassword, validateName } from '../utils/validateInputs';
 
 function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -12,56 +13,31 @@ function RegisterForm() {
   const [nameError, setNameError] = useState('');
   const [userExist, setUserExist] = useState('');
   const history = useHistory();
-  const minPasswordLength = 5;
-  const minNameLength = 11;
 
-  const validateEmail = () => {
-    // Regular expression to check for a valid email format
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    if (!emailRegex.test(email)) {
-      setEmailError('Please enter a valid email address');
-    } else {
-      setEmailError('');
-    }
-  };
-
-  const validatePassword = () => {
-    if (password.length < minPasswordLength) {
-      setPasswordError('Password must be at least 6 characters');
-    } else {
-      setPasswordError('');
-    }
-  };
-
-  const validateName = () => {
-    if (name.length < minNameLength) {
-      setNameError('Name must be at least 12 characters');
-    } else {
-      setNameError('');
-    }
-  };
+  useEffect(() => {
+    setEmailError(validateEmail(email));
+    setPasswordError(validatePassword(password));
+    setNameError(validateName(name));
+  }, [name, email, password]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    validateEmail();
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    validatePassword();
   };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-    validateName();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    validateEmail();
-    validatePassword();
-    validateName();
+    validateEmail(email);
+    validatePassword(password);
+    validateName(name);
 
     if (!emailError && !passwordError && !nameError) {
       try {
@@ -79,7 +55,7 @@ function RegisterForm() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log('Response from server:', data);
+          localStorage.setItem('user', JSON.stringify(data));
           history.push('/customer/products');
         } else {
           const errorData = await response.json();
